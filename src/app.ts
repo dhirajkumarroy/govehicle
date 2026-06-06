@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -77,7 +78,10 @@ const swaggerOptions: swaggerJSDoc.Options = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// 7. Base Routes
+// 7. Serve Static Uploaded Files
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+// 8. Base Routes
 app.use(env.API_PREFIX, indexRouter);
 
 // Redirect root URL to swagger docs for premium dev UX

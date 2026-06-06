@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
+const path_1 = __importDefault(require("path"));
 const morgan_1 = __importDefault(require("morgan"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -67,7 +68,9 @@ const swaggerOptions = {
 };
 const swaggerSpec = (0, swagger_jsdoc_1.default)(swaggerOptions);
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec));
-// 7. Base Routes
+// 7. Serve Static Uploaded Files
+app.use('/uploads', express_1.default.static(path_1.default.join(process.cwd(), 'uploads')));
+// 8. Base Routes
 app.use(env_1.env.API_PREFIX, index_routes_1.default);
 // Redirect root URL to swagger docs for premium dev UX
 app.get('/', (_req, res) => {

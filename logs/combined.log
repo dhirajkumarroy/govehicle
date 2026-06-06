@@ -366,3 +366,57 @@
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 1.661 ms","timestamp":"2026-06-06 19:51:27:5127"}
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 200 12449 - 0.374 ms","timestamp":"2026-06-06 19:51:27:5127"}
 {"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 5.671 ms","timestamp":"2026-06-06 19:51:28:5128"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/ 304 - - 7.186 ms","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 304 - - 3.193 ms","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 12.506 ms","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 15.009 ms","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-bundle.js 304 - - 1.510 ms","timestamp":"2026-06-06 19:58:10:5810"}
+{"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 0.750 ms","timestamp":"2026-06-06 19:58:11:5811"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:26:5826"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:58:58:5858"}
+{"level":"http","message":"::1 - GET /api-docs/ 304 - - 13.617 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 11.175 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-bundle.js 304 - - 10.554 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 304 - - 4.705 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 13.543 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 0.581 ms","timestamp":"2026-06-06 20:00:11:011"}
+{"level":"error","message":"Error: Authentication token is invalid or expired.\nStack: Error: Authentication token is invalid or expired.\n    at authenticateRequest (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/middlewares/auth.middleware.ts:30:10)\n    at Layer.handle [as handle_request] (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:284:15\n    at router.process_params (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:280:10)\n    at router.handle (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:175:3)\n    at router (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:47:12)","timestamp":"2026-06-06 20:00:15:015"}
+{"level":"http","message":"::1 - GET /api/v1/users/profile 401 1466 - 119.297 ms","timestamp":"2026-06-06 20:00:15:015"}
+{"level":"info","message":"User login attempt with email: verify-tester-1@example.com","timestamp":"2026-06-06 20:00:18:018"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 18ms","timestamp":"2026-06-06 20:00:18:018"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 21ms","timestamp":"2026-06-06 20:00:18:018"}
+{"level":"info","message":"User logged in successfully: verify-tester-1@example.com","timestamp":"2026-06-06 20:00:18:018"}
+{"level":"http","message":"::1 - POST /api/v1/auth/login 200 790 - 416.767 ms","timestamp":"2026-06-06 20:00:18:018"}
+{"level":"info","message":"UserService: Fetching user profile for ID ae2921ef-f97d-49db-8bfe-99ad98c54842","timestamp":"2026-06-06 20:01:49:149"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 2ms","timestamp":"2026-06-06 20:01:49:149"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"id\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"ae2921ef-f97d-49db-8bfe-99ad98c54842\",1,0] | Duration: 17ms","timestamp":"2026-06-06 20:01:49:149"}
+{"level":"info","message":"UserService: Successfully retrieved profile for email: verify-tester-1@example.com","timestamp":"2026-06-06 20:01:49:149"}
+{"level":"http","message":"::1 - GET /api/v1/users/profile 200 333 - 123.816 ms","timestamp":"2026-06-06 20:01:49:149"}
+{"level":"http","message":"::1 - GET /api-docs/ 304 - - 4.150 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-bundle.js 304 - - 5.562 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 7.418 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 304 - - 0.688 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 0.440 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 2.204 ms","timestamp":"2026-06-06 20:03:14:314"}
+{"level":"http","message":"::1 - GET /api-docs/ 304 - - 0.574 ms","timestamp":"2026-06-06 20:03:19:319"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 304 - - 0.481 ms","timestamp":"2026-06-06 20:03:19:319"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-bundle.js 304 - - 3.382 ms","timestamp":"2026-06-06 20:03:19:319"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 4.008 ms","timestamp":"2026-06-06 20:03:19:319"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 6.519 ms","timestamp":"2026-06-06 20:03:19:319"}
+{"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 3.527 ms","timestamp":"2026-06-06 20:03:20:320"}

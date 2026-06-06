@@ -35,6 +35,8 @@ const envSchema = zod_1.z.object({
     CLOUDINARY_CLOUD_NAME: zod_1.z.string().default(''),
     CLOUDINARY_API_KEY: zod_1.z.string().default(''),
     CLOUDINARY_API_SECRET: zod_1.z.string().default(''),
+    STORAGE_PROVIDER: zod_1.z.enum(['local', 'cloudinary']).default('local'),
+    UPLOAD_DIR: zod_1.z.string().default('uploads'),
 });
 const parseEnv = () => {
     const result = envSchema.safeParse(process.env);
