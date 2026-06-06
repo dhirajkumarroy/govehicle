@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 const zod_1 = require("zod");
-// Load environment variables from .env file
-dotenv_1.default.config();
+// Load environment variables dynamically based on file location, preventing CWD mismatches
+dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
 const envSchema = zod_1.z.object({
     PORT: zod_1.z.coerce.number().default(5000),
     NODE_ENV: zod_1.z.enum(['development', 'production', 'test']).default('development'),

@@ -33,6 +33,8 @@ router.get('/health', (_req, res) => {
   );
 });
 
-// Future sub-routes (e.g. Auth, Users, Vehicles, Bookings) will be registered here
+import authRouter from '../modules/auth/auth.routes';
+
+router.use('/auth', authRouter);
 
 export default router;

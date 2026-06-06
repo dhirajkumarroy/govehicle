@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const api_response_dto_1 = require("../common/dto/api-response.dto");
@@ -30,5 +33,6 @@ router.get('/health', (_req, res) => {
         timestamp: new Date().toISOString(),
     }));
 });
-// Future sub-routes (e.g. Auth, Users, Vehicles, Bookings) will be registered here
+const auth_routes_1 = __importDefault(require("../modules/auth/auth.routes"));
+router.use('/auth', auth_routes_1.default);
 exports.default = router;
