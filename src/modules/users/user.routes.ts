@@ -61,4 +61,42 @@ const controller = new UserController();
  */
 router.get('/profile', authenticateRequest, controller.getProfile);
 
+/**
+ * @openapi
+ * /users/profile:
+ *   patch:
+ *     summary: Update user profile details
+ *     description: Updates the profile details (name and phone number) of the authenticated user.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 minLength: 2
+ *                 maxLength: 100
+ *                 example: Dhiraj Kumar
+ *               phone:
+ *                 type: string
+ *                 example: "+919900000002"
+ *     responses:
+ *       200:
+ *         description: User profile updated successfully.
+ *       400:
+ *         description: Validation payload error.
+ *       401:
+ *         description: Unauthorized. Authentication token is missing, invalid, or expired.
+ *       409:
+ *         description: Conflict. Phone number is already registered by another user.
+ */
+router.patch('/profile', authenticateRequest, controller.updateProfile);
+
 export default router;
+
