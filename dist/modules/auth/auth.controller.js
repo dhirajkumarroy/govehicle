@@ -62,6 +62,20 @@ class AuthController {
             next(error);
         }
     };
+    /**
+     * HTTP handler to refresh session tokens.
+     * POST /api/v1/auth/refresh-token
+     */
+    refreshToken = async (req, res, next) => {
+        try {
+            const validatedBody = auth_validation_1.refreshTokenSchema.parse(req.body);
+            const result = await this.authService.refreshToken(validatedBody);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Tokens refreshed successfully.', result));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
 }
 exports.AuthController = AuthController;
 exports.default = AuthController;

@@ -54,3 +54,10 @@ export const verifyEmailSchema = z.object({
     .regex(/^\d+$/, 'OTP must contain only digits'),
 });
 
+export const refreshTokenSchema = z.object({
+  refreshToken: z
+    .string({ required_error: 'Refresh token is required' })
+    .min(1, 'Refresh token cannot be empty'),
+});
+
+

@@ -79,7 +79,18 @@ export class AuthRepository {
       });
     });
   }
+
+  /**
+   * Find a user by their unique database ID.
+   * @param id Database ID of the user.
+   */
+  async findById(id: string): Promise<User | null> {
+    return prisma.user.findUnique({
+      where: { id },
+    });
+  }
 }
 
 export default AuthRepository;
+
 

@@ -119,5 +119,36 @@ router.post('/login', controller.login);
  */
 router.post('/verify-email', controller.verifyEmail);
 
+/**
+ * @openapi
+ * /auth/refresh-token:
+ *   post:
+ *     summary: Refresh session access and refresh tokens
+ *     description: Generates a new access token and rotating refresh token using a valid, unexpired refresh token.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Tokens refreshed successfully.
+ *       401:
+ *         description: Unauthorized. Invalid or expired refresh token, or user not found.
+ *       403:
+ *         description: Forbidden. User email is not verified.
+ */
+router.post('/refresh-token', controller.refreshToken);
+
 export default router;
+
 

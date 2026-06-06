@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from './auth.service';
-import { registerSchema, loginSchema, verifyEmailSchema } from './auth.validation';
+import { registerSchema, loginSchema, verifyEmailSchema, refreshTokenSchema } from './auth.validation';
 import { ResponseDto } from '../../common/dto/api-response.dto';
 
 export class AuthController {
@@ -66,6 +66,23 @@ export class AuthController {
 
       res.status(200).json(
         ResponseDto.success('Email verified successfully.')
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to refresh session tokens.
+   * POST /api/v1/auth/refresh-token
+   */
+  refreshToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const validatedBody = refreshTokenSchema.parse(req.body);
+      const result = await this.authService.refreshToken(validatedBody);
+
+      res.status(200).json(
+        ResponseDto.success('Tokens refreshed successfully.', result)
       );
     } catch (error) {
       next(error);

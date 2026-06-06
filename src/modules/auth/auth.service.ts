@@ -1,12 +1,13 @@
 import { User } from '@prisma/client';
 import { AuthRepository } from './auth.repository';
-import { RegisterRequestDto, LoginRequestDto, VerifyEmailRequestDto } from './auth.types';
+import { RegisterRequestDto, LoginRequestDto, VerifyEmailRequestDto, RefreshTokenRequestDto } from './auth.types';
 import { hashPassword } from '../../common/utils/hash-password';
 import { comparePassword } from '../../common/utils/compare-password';
 import { generateOtp } from '../../common/utils/generate-otp';
 import {
   generateAccessToken,
   generateRefreshToken,
+  verifyRefreshToken,
 } from '../../common/utils/generate-jwt';
 import {
   ConflictError,
@@ -142,6 +143,42 @@ export class AuthService {
     await this.authRepository.verifyUserEmailAndDeleteOtp(email, otpRecord.id);
 
     logger.info(`Email verification successful for user: ${email}`);
+  }
+
+  /**
+   * Validates refresh token, confirms user identity, and issues new tokens (rotation enabled).
+   */
+  async refreshToken(dto: RefreshTokenRequestDto): Promise<{ accessToken: string; refreshToken: string }> {
+    const { refreshToken } = dto;
+
+    logger.info('Attempting to refresh access token using refresh token.');
+
+    let payload;
+    try {
+      payload = verifyRefreshToken(refreshToken);
+    } catch (error) {
+      logger.warn(`Token refresh failed: Invalid or expired refresh token. Error: ${error instanceof Error ? error.message : error}`);
+      throw new UnauthorizedError('Invalid or expired refresh token.');
+    }
+
+    const user = await this.authRepository.findById(payload.userId);
+    if (!user) {
+      logger.warn(`Token refresh failed. User not found for ID: ${payload.userId}`);
+      throw new UnauthorizedError('User not found.');
+    }
+
+    if (!user.isEmailVerified) {
+      logger.warn(`Token refresh failed. User email is unverified: ${user.email}`);
+      throw new ForbiddenError('Your email address is not verified. Please verify your email first.');
+    }
+
+    const tokenPayload = { userId: user.id, email: user.email, role: user.role };
+    const accessToken = generateAccessToken(tokenPayload);
+    const newRefreshToken = generateRefreshToken(tokenPayload);
+
+    logger.info(`Tokens refreshed successfully for user: ${user.email}`);
+
+    return { accessToken, refreshToken: newRefreshToken };
   }
 }
 

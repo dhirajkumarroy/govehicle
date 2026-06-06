@@ -72,6 +72,15 @@ class AuthRepository {
             });
         });
     }
+    /**
+     * Find a user by their unique database ID.
+     * @param id Database ID of the user.
+     */
+    async findById(id) {
+        return database_1.default.user.findUnique({
+            where: { id },
+        });
+    }
 }
 exports.AuthRepository = AuthRepository;
 exports.default = AuthRepository;

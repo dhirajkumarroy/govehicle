@@ -108,6 +108,35 @@ class AuthService {
         await this.authRepository.verifyUserEmailAndDeleteOtp(email, otpRecord.id);
         logger_1.default.info(`Email verification successful for user: ${email}`);
     }
+    /**
+     * Validates refresh token, confirms user identity, and issues new tokens (rotation enabled).
+     */
+    async refreshToken(dto) {
+        const { refreshToken } = dto;
+        logger_1.default.info('Attempting to refresh access token using refresh token.');
+        let payload;
+        try {
+            payload = (0, generate_jwt_1.verifyRefreshToken)(refreshToken);
+        }
+        catch (error) {
+            logger_1.default.warn(`Token refresh failed: Invalid or expired refresh token. Error: ${error instanceof Error ? error.message : error}`);
+            throw new app_error_1.UnauthorizedError('Invalid or expired refresh token.');
+        }
+        const user = await this.authRepository.findById(payload.userId);
+        if (!user) {
+            logger_1.default.warn(`Token refresh failed. User not found for ID: ${payload.userId}`);
+            throw new app_error_1.UnauthorizedError('User not found.');
+        }
+        if (!user.isEmailVerified) {
+            logger_1.default.warn(`Token refresh failed. User email is unverified: ${user.email}`);
+            throw new app_error_1.ForbiddenError('Your email address is not verified. Please verify your email first.');
+        }
+        const tokenPayload = { userId: user.id, email: user.email, role: user.role };
+        const accessToken = (0, generate_jwt_1.generateAccessToken)(tokenPayload);
+        const newRefreshToken = (0, generate_jwt_1.generateRefreshToken)(tokenPayload);
+        logger_1.default.info(`Tokens refreshed successfully for user: ${user.email}`);
+        return { accessToken, refreshToken: newRefreshToken };
+    }
 }
 exports.AuthService = AuthService;
 exports.default = AuthService;
