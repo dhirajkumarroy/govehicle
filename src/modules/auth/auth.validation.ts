@@ -41,33 +41,16 @@ export const loginSchema = z.object({
     .min(1, 'Password cannot be empty'),
 });
 
-export const verifyOtpSchema = z.object({
+export const verifyEmailSchema = z.object({
   email: z
     .string({ required_error: 'Email is required' })
     .trim()
     .email('Invalid email address format'),
   
-  code: z
-    .string({ required_error: 'OTP code is required' })
-    .regex(/^\d{6}$/, 'OTP code must be exactly 6 digits'),
+  otp: z
+    .string({ required_error: 'OTP is required' })
+    .trim()
+    .length(6, 'OTP must be exactly 6 digits')
+    .regex(/^\d+$/, 'OTP must contain only digits'),
 });
 
-export const forgotPasswordSchema = z.object({
-  email: z
-    .string({ required_error: 'Email is required' })
-    .trim()
-    .email('Invalid email address format'),
-});
-
-export const resetPasswordSchema = z.object({
-  email: z
-    .string({ required_error: 'Email is required' })
-    .trim()
-    .email('Invalid email address format'),
-  
-  code: z
-    .string({ required_error: 'OTP code is required' })
-    .regex(/^\d{6}$/, 'OTP code must be exactly 6 digits'),
-  
-  newPassword: passwordComplexity,
-});

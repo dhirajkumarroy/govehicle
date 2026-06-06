@@ -49,44 +49,10 @@ const controller = new auth_controller_1.AuthController();
 router.post('/register', controller.register);
 /**
  * @openapi
- * /auth/verify-otp:
- *   post:
- *     summary: Verify email verification OTP
- *     description: Verifies user account and marks email as verified.
- *     tags:
- *       - Authentication
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - code
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *                 example: dhiraj@example.com
- *               code:
- *                 type: string
- *                 example: "123456"
- *     responses:
- *       200:
- *         description: Email verified successfully.
- *       400:
- *         description: Invalid or expired OTP code.
- *       404:
- *         description: User profile not found.
- */
-router.post('/verify-otp', controller.verifyOtp);
-/**
- * @openapi
  * /auth/login:
  *   post:
  *     summary: Log in credentials and get session token
- *     description: Authenticates user credentials and stores secure refresh session cookies.
+ *     description: Authenticates user credentials and returns tokens.
  *     tags:
  *       - Authentication
  *     requestBody:
@@ -109,7 +75,7 @@ router.post('/verify-otp', controller.verifyOtp);
  *                 example: Password@123
  *     responses:
  *       200:
- *         description: Login successful. Cookies generated.
+ *         description: Login successful. Tokens generated.
  *       401:
  *         description: Invalid email or password.
  *       403:
@@ -118,10 +84,10 @@ router.post('/verify-otp', controller.verifyOtp);
 router.post('/login', controller.login);
 /**
  * @openapi
- * /auth/forgot-password:
+ * /auth/verify-email:
  *   post:
- *     summary: Initiate password recovery OTP
- *     description: Sends a password recovery OTP code if the email address exists.
+ *     summary: Verify user email using OTP code
+ *     description: Confirms a user's email address by validating the 6-digit OTP code sent during registration.
  *     tags:
  *       - Authentication
  *     requestBody:
@@ -132,81 +98,22 @@ router.post('/login', controller.login);
  *             type: object
  *             required:
  *               - email
+ *               - otp
  *             properties:
  *               email:
  *                 type: string
  *                 format: email
  *                 example: dhiraj@example.com
- *     responses:
- *       200:
- *         description: Recovery OTP code processed.
- */
-router.post('/forgot-password', controller.forgotPassword);
-/**
- * @openapi
- * /auth/reset-password:
- *   post:
- *     summary: Reset password with OTP
- *     description: Verifies password recovery OTP and resets user password.
- *     tags:
- *       - Authentication
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - code
- *               - newPassword
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *                 example: dhiraj@example.com
- *               code:
+ *               otp:
  *                 type: string
  *                 example: "123456"
- *               newPassword:
- *                 type: string
- *                 format: password
- *                 example: NewPassword@123
  *     responses:
  *       200:
- *         description: Password reset successfully.
+ *         description: Email verified successfully.
  *       400:
- *         description: Invalid or expired OTP reset code.
+ *         description: Validation payload error, invalid OTP, or expired OTP.
  *       404:
- *         description: User profile not found.
+ *         description: User not found.
  */
-router.post('/reset-password', controller.resetPassword);
-/**
- * @openapi
- * /auth/refresh-token:
- *   post:
- *     summary: Refresh Access Token
- *     description: Generates a new access JWT using standard HTTP-only session refresh cookies.
- *     tags:
- *       - Authentication
- *     responses:
- *       200:
- *         description: Access token successfully refreshed.
- *       401:
- *         description: Cookie expired or session was destroyed.
- */
-router.post('/refresh-token', controller.refreshToken);
-/**
- * @openapi
- * /auth/logout:
- *   post:
- *     summary: Log user out
- *     description: Destroys secure refresh session cookies.
- *     tags:
- *       - Authentication
- *     responses:
- *       200:
- *         description: Logout successful. Cookies cleared.
- */
-router.post('/logout', controller.logout);
+router.post('/verify-email', controller.verifyEmail);
 exports.default = router;

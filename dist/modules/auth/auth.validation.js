@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetPasswordSchema = exports.forgotPasswordSchema = exports.verifyOtpSchema = exports.loginSchema = exports.registerSchema = void 0;
+exports.verifyEmailSchema = exports.loginSchema = exports.registerSchema = void 0;
 const zod_1 = require("zod");
 // Shared password complexity validation rules
 const passwordComplexity = zod_1.z
@@ -33,28 +33,14 @@ exports.loginSchema = zod_1.z.object({
         .string({ required_error: 'Password is required' })
         .min(1, 'Password cannot be empty'),
 });
-exports.verifyOtpSchema = zod_1.z.object({
+exports.verifyEmailSchema = zod_1.z.object({
     email: zod_1.z
         .string({ required_error: 'Email is required' })
         .trim()
         .email('Invalid email address format'),
-    code: zod_1.z
-        .string({ required_error: 'OTP code is required' })
-        .regex(/^\d{6}$/, 'OTP code must be exactly 6 digits'),
-});
-exports.forgotPasswordSchema = zod_1.z.object({
-    email: zod_1.z
-        .string({ required_error: 'Email is required' })
+    otp: zod_1.z
+        .string({ required_error: 'OTP is required' })
         .trim()
-        .email('Invalid email address format'),
-});
-exports.resetPasswordSchema = zod_1.z.object({
-    email: zod_1.z
-        .string({ required_error: 'Email is required' })
-        .trim()
-        .email('Invalid email address format'),
-    code: zod_1.z
-        .string({ required_error: 'OTP code is required' })
-        .regex(/^\d{6}$/, 'OTP code must be exactly 6 digits'),
-    newPassword: passwordComplexity,
+        .length(6, 'OTP must be exactly 6 digits')
+        .regex(/^\d+$/, 'OTP must contain only digits'),
 });

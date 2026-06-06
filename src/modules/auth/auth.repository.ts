@@ -52,84 +52,34 @@ export class AuthRepository {
   }
 
   /**
-   * Finds the latest OTP code record created for a given email and type.
-   * @param email Target user email address.
-   * @param type The role/intent of this OTP.
+   * Find an OTP record by email, code, and type.
    */
-  async findLatestOtp(email: string, type: OtpType): Promise<Otp | null> {
+  async findOtp(email: string, code: string, type: OtpType): Promise<Otp | null> {
     return prisma.otp.findFirst({
-      where: { email, type },
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
-  /**
-   * Creates a new OTP record.
-   * @param email The target user email.
-   * @param code The numeric OTP code string.
-   * @param type The purpose of this OTP.
-   * @param expiresAt The date/time when this code expires.
-   */
-  async createOtp(
-    email: string,
-    code: string,
-    type: OtpType,
-    expiresAt: Date
-  ): Promise<Otp> {
-    return prisma.otp.create({
-      data: {
+      where: {
         email,
         code,
         type,
-        expiresAt,
       },
     });
   }
 
   /**
-   * Verifies a user's email address and deletes their verification OTP atomically.
-   * @param userId The ID of the user to verify.
-   * @param otpId The ID of the OTP record to delete.
+   * Updates user email verification status and deletes the verified OTP record atomically in a transaction.
    */
-  async transactionalVerifyUserEmail(userId: string, otpId: string): Promise<User> {
-    return prisma.$transaction(async (tx) => {
-      const user = await tx.user.update({
-        where: { id: userId },
+  async verifyUserEmailAndDeleteOtp(email: string, otpId: string): Promise<void> {
+    await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { email },
         data: { isEmailVerified: true },
       });
 
       await tx.otp.delete({
         where: { id: otpId },
       });
-
-      return user;
-    });
-  }
-
-  /**
-   * Resets a user's password and deletes their recovery OTP atomically.
-   * @param userId The ID of the user.
-   * @param newPasswordHash The hashed new password to set.
-   * @param otpId The ID of the OTP record to delete.
-   */
-  async transactionalResetPassword(
-    userId: string,
-    newPasswordHash: string,
-    otpId: string
-  ): Promise<User> {
-    return prisma.$transaction(async (tx) => {
-      const user = await tx.user.update({
-        where: { id: userId },
-        data: { password: newPasswordHash },
-      });
-
-      await tx.otp.delete({
-        where: { id: otpId },
-      });
-
-      return user;
     });
   }
 }
 
 export default AuthRepository;
+

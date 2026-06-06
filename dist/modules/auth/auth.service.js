@@ -47,33 +47,6 @@ class AuthService {
         return user;
     }
     /**
-     * Verifies registration OTP and updates user's email verification status.
-     */
-    async verifyOtp(dto) {
-        const { email, code } = dto;
-        logger_1.default.info(`Verifying registration OTP for email: ${email}`);
-        // 1. Fetch latest EMAIL_VERIFICATION OTP
-        const latestOtp = await this.authRepository.findLatestOtp(email, 'EMAIL_VERIFICATION');
-        if (!latestOtp || latestOtp.code !== code) {
-            logger_1.default.warn(`OTP verification failed. Invalid code for email: ${email}`);
-            throw new app_error_1.BadRequestError('Invalid verification code.');
-        }
-        // 2. Guard against expired OTP
-        if (new Date() > latestOtp.expiresAt) {
-            logger_1.default.warn(`OTP verification failed. Expired code for email: ${email}`);
-            throw new app_error_1.BadRequestError('Verification code has expired.');
-        }
-        // 3. Retrieve user profile
-        const user = await this.authRepository.findByEmail(email);
-        if (!user) {
-            logger_1.default.warn(`OTP verification failed. User profile not found: ${email}`);
-            throw new app_error_1.NotFoundError('User profile not found.');
-        }
-        // 4. Mark verified and delete OTP atomically
-        await this.authRepository.transactionalVerifyUserEmail(user.id, latestOtp.id);
-        logger_1.default.info(`Email successfully verified for user: ${email}`);
-    }
-    /**
      * Logs a user in, verifies credentials, and issues authorization tokens.
      */
     async login(dto) {
@@ -104,78 +77,36 @@ class AuthService {
         return { user, accessToken, refreshToken };
     }
     /**
-     * Generates a password recovery OTP code if the email exists.
+     * Verifies the user's email address using the registration OTP code.
      */
-    async forgotPassword(dto) {
-        const { email } = dto;
-        logger_1.default.info(`Forgot password request for email: ${email}`);
+    async verifyEmail(dto) {
+        const { email, otp } = dto;
+        logger_1.default.info(`Attempting to verify email: ${email} with OTP: ${otp}`);
+        // 1. Retrieve user to check if they exist or are already verified
         const user = await this.authRepository.findByEmail(email);
         if (!user) {
-            // Return success to prevent email verification harvesting attacks
-            logger_1.default.warn(`Forgot password request completed. Email not found (silently returning success): ${email}`);
-            return;
+            logger_1.default.warn(`Email verification failed. User not found: ${email}`);
+            throw new app_error_1.NotFoundError('User not found.');
         }
-        // Generate reset code
-        const otpCode = (0, generate_otp_1.generateOtp)();
-        const otpExpiresAt = new Date();
-        otpExpiresAt.setMinutes(otpExpiresAt.getMinutes() + 10); // OTP valid for 10 minutes
-        await this.authRepository.createOtp(email, otpCode, 'PASSWORD_RESET', otpExpiresAt);
-        logger_1.default.info(`Forgot password OTP generated for ${email}. Reset code: ${otpCode}`);
-    }
-    /**
-     * Verifies reset OTP code and updates user's password atomically.
-     */
-    async resetPassword(dto) {
-        const { email, code, newPassword } = dto;
-        logger_1.default.info(`Resetting password for email: ${email}`);
-        // 1. Retrieve user profile
-        const user = await this.authRepository.findByEmail(email);
-        if (!user) {
-            logger_1.default.warn(`Password reset failed. User profile not found: ${email}`);
-            throw new app_error_1.NotFoundError('User profile not found.');
+        if (user.isEmailVerified) {
+            logger_1.default.warn(`Email verification skipped. Email already verified: ${email}`);
+            throw new app_error_1.BadRequestError('Email address is already verified.');
         }
-        // 2. Fetch latest PASSWORD_RESET OTP
-        const latestOtp = await this.authRepository.findLatestOtp(email, 'PASSWORD_RESET');
-        if (!latestOtp || latestOtp.code !== code) {
-            logger_1.default.warn(`Password reset failed. Invalid reset code for: ${email}`);
-            throw new app_error_1.BadRequestError('Invalid reset code.');
+        // 2. Look up the OTP record
+        const otpRecord = await this.authRepository.findOtp(email, otp, 'EMAIL_VERIFICATION');
+        if (!otpRecord) {
+            logger_1.default.warn(`Email verification failed. Invalid OTP code: ${otp} for email: ${email}`);
+            throw new app_error_1.BadRequestError('Invalid OTP code or email address.');
         }
-        // 3. Guard against expired OTP
-        if (new Date() > latestOtp.expiresAt) {
-            logger_1.default.warn(`Password reset failed. Expired code for: ${email}`);
-            throw new app_error_1.BadRequestError('Reset code has expired.');
+        // 3. Check for OTP expiration
+        const now = new Date();
+        if (otpRecord.expiresAt < now) {
+            logger_1.default.warn(`Email verification failed. OTP code expired for email: ${email}`);
+            throw new app_error_1.BadRequestError('OTP has expired. Please request a new one.');
         }
-        // 4. Hash new password and write atomically
-        const newPasswordHash = await (0, hash_password_1.hashPassword)(newPassword);
-        await this.authRepository.transactionalResetPassword(user.id, newPasswordHash, latestOtp.id);
-        logger_1.default.info(`Password successfully reset for email: ${email}`);
-    }
-    /**
-     * Verifies long-lived session cookie and issues a fresh Access Token.
-     */
-    async refreshToken(refreshTokenStr) {
-        logger_1.default.info('Attempting to refresh access token using session refresh token.');
-        try {
-            // 1. Verify token signature and integrity
-            const decoded = (0, generate_jwt_1.verifyRefreshToken)(refreshTokenStr);
-            // 2. Confirm user still exists
-            const user = await this.authRepository.findByEmail(decoded.email);
-            if (!user) {
-                throw new app_error_1.UnauthorizedError('User profile not found.');
-            }
-            // 3. Issue a fresh access token
-            const accessToken = (0, generate_jwt_1.generateAccessToken)({
-                userId: user.id,
-                email: user.email,
-                role: user.role,
-            });
-            logger_1.default.info(`Access token successfully refreshed for email: ${user.email}`);
-            return { accessToken };
-        }
-        catch (error) {
-            logger_1.default.warn('Token refresh failed. Refresh token was invalid or expired.');
-            throw new app_error_1.UnauthorizedError('Session expired. Please log in again.');
-        }
+        // 4. Confirm verification and delete the OTP atomically in a transaction
+        await this.authRepository.verifyUserEmailAndDeleteOtp(email, otpRecord.id);
+        logger_1.default.info(`Email verification successful for user: ${email}`);
     }
 }
 exports.AuthService = AuthService;
