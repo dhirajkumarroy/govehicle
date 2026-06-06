@@ -1,9 +1,9 @@
 import { Response, NextFunction } from 'express';
 import { UserService } from './user.service';
-import { updateProfileSchema } from './user.validation';
+import { updateProfileSchema, changePasswordSchema } from './user.validation';
 import { AuthenticatedRequest } from '../../common/interfaces/authenticated-request.interface';
 import { ResponseDto } from '../../common/dto/api-response.dto';
-import { UnauthorizedError } from '../../common/utils/app-error';
+import { UnauthorizedError, BadRequestError } from '../../common/utils/app-error';
 import logger from '../../config/logger';
 
 export class UserController {
@@ -60,6 +60,64 @@ export class UserController {
 
       res.status(200).json(
         ResponseDto.success('User profile updated successfully.', profile)
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to modify user password.
+   * PATCH /api/v1/users/change-password
+   */
+  changePassword = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        logger.warn('UserController: Password change failed due to missing req.user.userId');
+        throw new UnauthorizedError('Unauthorized access.');
+      }
+
+      const validatedBody = changePasswordSchema.parse(req.body);
+      await this.userService.changePassword(userId, validatedBody);
+
+      res.status(200).json(
+        ResponseDto.success('Password changed successfully.')
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to upload and update user profile avatar image.
+   * PATCH /api/v1/users/profile-image
+   */
+  updateAvatar = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        logger.warn('UserController: Avatar upload failed due to missing req.user.userId');
+        throw new UnauthorizedError('Unauthorized access.');
+      }
+
+      if (!req.file) {
+        logger.warn('UserController: Avatar upload failed due to missing req.file');
+        throw new BadRequestError('Profile image file is required.');
+      }
+
+      const profile = await this.userService.updateAvatar(userId, req.file);
+
+      res.status(200).json(
+        ResponseDto.success('Profile image updated successfully.', profile)
       );
     } catch (error) {
       next(error);

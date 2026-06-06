@@ -51,6 +51,47 @@ class UserController {
             next(error);
         }
     };
+    /**
+     * HTTP handler to modify user password.
+     * PATCH /api/v1/users/change-password
+     */
+    changePassword = async (req, res, next) => {
+        try {
+            const userId = req.user?.userId;
+            if (!userId) {
+                logger_1.default.warn('UserController: Password change failed due to missing req.user.userId');
+                throw new app_error_1.UnauthorizedError('Unauthorized access.');
+            }
+            const validatedBody = user_validation_1.changePasswordSchema.parse(req.body);
+            await this.userService.changePassword(userId, validatedBody);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Password changed successfully.'));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
+    /**
+     * HTTP handler to upload and update user profile avatar image.
+     * PATCH /api/v1/users/profile-image
+     */
+    updateAvatar = async (req, res, next) => {
+        try {
+            const userId = req.user?.userId;
+            if (!userId) {
+                logger_1.default.warn('UserController: Avatar upload failed due to missing req.user.userId');
+                throw new app_error_1.UnauthorizedError('Unauthorized access.');
+            }
+            if (!req.file) {
+                logger_1.default.warn('UserController: Avatar upload failed due to missing req.file');
+                throw new app_error_1.BadRequestError('Profile image file is required.');
+            }
+            const profile = await this.userService.updateAvatar(userId, req.file);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Profile image updated successfully.', profile));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
 }
 exports.UserController = UserController;
 exports.default = UserController;

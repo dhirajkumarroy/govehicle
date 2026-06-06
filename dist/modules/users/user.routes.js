@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_controller_1 = require("./user.controller");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
+const upload_middleware_1 = require("../../middlewares/upload.middleware");
 const router = (0, express_1.Router)();
 const controller = new user_controller_1.UserController();
 /**
@@ -44,7 +45,7 @@ const controller = new user_controller_1.UserController();
  *                     name:
  *                       type: string
  *                       example: Dhiraj
-                     role:
+ *                     role:
  *                       type: string
  *                       example: CUSTOMER
  *                     isEmailVerified:
@@ -96,4 +97,76 @@ router.get('/profile', auth_middleware_1.authenticateRequest, controller.getProf
  *         description: Conflict. Phone number is already registered by another user.
  */
 router.patch('/profile', auth_middleware_1.authenticateRequest, controller.updateProfile);
+/**
+ * @openapi
+ * /users/change-password:
+ *   patch:
+ *     summary: Change user password
+ *     description: Changes the password of the authenticated user after validating the current password.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - oldPassword
+ *               - newPassword
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 example: NewPassword@123
+ *               newPassword:
+ *                 type: string
+ *                 format: password
+ *                 example: UpdatedPassword@123
+ *     responses:
+ *       200:
+ *         description: Password changed successfully.
+ *       400:
+ *         description: Validation payload error, invalid current password, or new password same as current password.
+ *       401:
+ *         description: Unauthorized. Authentication token is missing, invalid, or expired.
+ *       404:
+ *         description: User not found.
+ */
+router.patch('/change-password', auth_middleware_1.authenticateRequest, controller.changePassword);
+/**
+ * @openapi
+ * /users/profile-image:
+ *   patch:
+ *     summary: Upload profile image
+ *     description: Uploads a JPEG, PNG, or WebP avatar image (max 5 MB) and associates it with the authenticated user. Removes the old avatar if it exists.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - avatar
+ *             properties:
+ *               avatar:
+ *                 type: string
+ *                 format: binary
+ *                 description: Avatar image file (JPEG, PNG, WebP, max 5 MB)
+ *     responses:
+ *       200:
+ *         description: Profile image updated successfully.
+ *       400:
+ *         description: Validation payload error, invalid file type, or file too large.
+ *       401:
+ *         description: Unauthorized. Authentication token is missing, invalid, or expired.
+ *       404:
+ *         description: User not found.
+ */
+router.patch('/profile-image', auth_middleware_1.authenticateRequest, upload_middleware_1.uploadAvatar, controller.updateAvatar);
 exports.default = router;

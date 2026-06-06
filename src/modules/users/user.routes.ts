@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UserController } from './user.controller';
 import { authenticateRequest } from '../../middlewares/auth.middleware';
+import { uploadAvatar } from '../../middlewares/upload.middleware';
 
 const router = Router();
 const controller = new UserController();
@@ -44,7 +45,7 @@ const controller = new UserController();
  *                     name:
  *                       type: string
  *                       example: Dhiraj
-                     role:
+ *                     role:
  *                       type: string
  *                       example: CUSTOMER
  *                     isEmailVerified:
@@ -98,5 +99,80 @@ router.get('/profile', authenticateRequest, controller.getProfile);
  */
 router.patch('/profile', authenticateRequest, controller.updateProfile);
 
+/**
+ * @openapi
+ * /users/change-password:
+ *   patch:
+ *     summary: Change user password
+ *     description: Changes the password of the authenticated user after validating the current password.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - oldPassword
+ *               - newPassword
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 example: NewPassword@123
+ *               newPassword:
+ *                 type: string
+ *                 format: password
+ *                 example: UpdatedPassword@123
+ *     responses:
+ *       200:
+ *         description: Password changed successfully.
+ *       400:
+ *         description: Validation payload error, invalid current password, or new password same as current password.
+ *       401:
+ *         description: Unauthorized. Authentication token is missing, invalid, or expired.
+ *       404:
+ *         description: User not found.
+ */
+router.patch('/change-password', authenticateRequest, controller.changePassword);
+
+/**
+ * @openapi
+ * /users/profile-image:
+ *   patch:
+ *     summary: Upload profile image
+ *     description: Uploads a JPEG, PNG, or WebP avatar image (max 5 MB) and associates it with the authenticated user. Removes the old avatar if it exists.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - avatar
+ *             properties:
+ *               avatar:
+ *                 type: string
+ *                 format: binary
+ *                 description: Avatar image file (JPEG, PNG, WebP, max 5 MB)
+ *     responses:
+ *       200:
+ *         description: Profile image updated successfully.
+ *       400:
+ *         description: Validation payload error, invalid file type, or file too large.
+ *       401:
+ *         description: Unauthorized. Authentication token is missing, invalid, or expired.
+ *       404:
+ *         description: User not found.
+ */
+router.patch('/profile-image', authenticateRequest, uploadAvatar, controller.updateAvatar);
+
 export default router;
+
 
