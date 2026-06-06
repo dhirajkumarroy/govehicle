@@ -279,3 +279,90 @@
 {"level":"warn","message":"Token refresh failed: Invalid or expired refresh token. Error: jwt malformed","timestamp":"2026-06-06 19:43:00:430"}
 {"level":"error","message":"Error: Invalid or expired refresh token.\nStack: Error: Invalid or expired refresh token.\n    at AuthService.refreshToken (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.service.ts:161:13)\n    at refreshToken (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.controller.ts:82:45)\n    at Layer.handle [as handle_request] (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:284:15\n    at router.process_params (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:280:10)\n    at router.handle (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/node_modules/express/lib/router/index.js:175:3)","timestamp":"2026-06-06 19:43:00:430"}
 {"level":"http","message":"::1 - POST /api/v1/auth/refresh-token 401 1451 - 18.656 ms","timestamp":"2026-06-06 19:43:00:430"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:44:4644"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:49:4649"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:46:55:4655"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:02:472"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:14:4714"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:22:4722"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-06 19:47:29:4729"}
+{"level":"info","message":"Forgot password request initiated for email: verify-tester-1@example.com","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 10ms","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 17ms","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"debug","message":"Query: DELETE FROM \"public\".\"otps\" WHERE (\"public\".\"otps\".\"email\" = $1 AND \"public\".\"otps\".\"type\" = CAST($2::text AS \"public\".\"OtpType\")) | Params: [\"verify-tester-1@example.com\",\"PASSWORD_RESET\"] | Duration: 8ms","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"debug","message":"Query: INSERT INTO \"public\".\"otps\" (\"id\",\"email\",\"code\",\"type\",\"expiresAt\",\"createdAt\") VALUES ($1,$2,$3,CAST($4::text AS \"public\".\"OtpType\"),$5,$6) RETURNING \"public\".\"otps\".\"id\", \"public\".\"otps\".\"email\", \"public\".\"otps\".\"code\", \"public\".\"otps\".\"type\"::text, \"public\".\"otps\".\"expiresAt\", \"public\".\"otps\".\"createdAt\" | Params: [\"46e29ca8-732c-4175-b2ed-f97a0554f77d\",\"verify-tester-1@example.com\",\"313237\",\"PASSWORD_RESET\",\"2026-06-06 14:27:58.659 UTC\",\"2026-06-06 14:17:58.662 UTC\"] | Duration: 4ms","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"info","message":"Password reset OTP created successfully: verify-tester-1@example.com. Code: 313237","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"warn","message":"[MOCK EMAIL SERVICE] SMTP credentials not fully configured. Email simulated instead of sent.","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"warn","message":"To:      verify-tester-1@example.com","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"warn","message":"Subject: Password Reset OTP - GoVehicle","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"warn","message":"Body:    Hello Tester Verify,\n\nYou requested a password reset. Your 6-digit password reset OTP is:\n\n313237\n\nThis OTP is valid for 10 minutes. If you did not make this request, please ignore this email.","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"http","message":"::1 - POST /api/v1/auth/forgot-password 200 75 - 107.484 ms","timestamp":"2026-06-06 19:47:58:4758"}
+{"level":"info","message":"Reset password request submitted for email: verify-tester-1@example.com","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 0ms","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 0ms","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"debug","message":"Query: SELECT \"public\".\"otps\".\"id\", \"public\".\"otps\".\"email\", \"public\".\"otps\".\"code\", \"public\".\"otps\".\"type\"::text, \"public\".\"otps\".\"expiresAt\", \"public\".\"otps\".\"createdAt\" FROM \"public\".\"otps\" WHERE (\"public\".\"otps\".\"email\" = $1 AND \"public\".\"otps\".\"code\" = $2 AND \"public\".\"otps\".\"type\" = CAST($3::text AS \"public\".\"OtpType\")) LIMIT $4 OFFSET $5 | Params: [\"verify-tester-1@example.com\",\"111111\",\"PASSWORD_RESET\",1,0] | Duration: 1ms","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"warn","message":"Reset password failed. Invalid OTP code: 111111 for email: verify-tester-1@example.com","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"error","message":"Error: Invalid OTP code or email address.\nStack: Error: Invalid OTP code or email address.\n    at AuthService.resetPassword (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.service.ts:244:13)\n    at async resetPassword (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.controller.ts:124:7)","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"http","message":"::1 - POST /api/v1/auth/reset-password 400 398 - 23.075 ms","timestamp":"2026-06-06 19:48:35:4835"}
+{"level":"info","message":"Reset password request submitted for email: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 0ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 0ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: SELECT \"public\".\"otps\".\"id\", \"public\".\"otps\".\"email\", \"public\".\"otps\".\"code\", \"public\".\"otps\".\"type\"::text, \"public\".\"otps\".\"expiresAt\", \"public\".\"otps\".\"createdAt\" FROM \"public\".\"otps\" WHERE (\"public\".\"otps\".\"email\" = $1 AND \"public\".\"otps\".\"code\" = $2 AND \"public\".\"otps\".\"type\" = CAST($3::text AS \"public\".\"OtpType\")) LIMIT $4 OFFSET $5 | Params: [\"verify-tester-1@example.com\",\"313237\",\"PASSWORD_RESET\",1,0] | Duration: 1ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: BEGIN | Params: [] | Duration: 0ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: UPDATE \"public\".\"users\" SET \"password\" = $1, \"updatedAt\" = $2 WHERE (\"public\".\"users\".\"email\" = $3 AND 1=1) RETURNING \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" | Params: [\"$2b$12$tPnwja7wffYhFTPCLm7xU.ZGeUYffrfoaH.UDlbeU0D3Z1dDmK1IG\",\"2026-06-06 14:19:04.392 UTC\",\"verify-tester-1@example.com\"] | Duration: 2ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: DELETE FROM \"public\".\"otps\" WHERE (\"public\".\"otps\".\"id\" = $1 AND 1=1) RETURNING \"public\".\"otps\".\"id\", \"public\".\"otps\".\"email\", \"public\".\"otps\".\"code\", \"public\".\"otps\".\"type\"::text, \"public\".\"otps\".\"expiresAt\", \"public\".\"otps\".\"createdAt\" | Params: [\"46e29ca8-732c-4175-b2ed-f97a0554f77d\"] | Duration: 0ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"debug","message":"Query: COMMIT | Params: [] | Duration: 1ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"info","message":"Password reset successfully for user: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"http","message":"::1 - POST /api/v1/auth/reset-password 200 66 - 365.576 ms","timestamp":"2026-06-06 19:49:04:494"}
+{"level":"info","message":"User login attempt with email: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:08:498"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 0ms","timestamp":"2026-06-06 19:49:08:498"}
+{"level":"warn","message":"Login failed. Password mismatch for email: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:09:499"}
+{"level":"error","message":"Error: Invalid email address or password.\nStack: Error: Invalid email address or password.\n    at AuthService.login (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.service.ts:98:13)\n    at async login (/Users/dhirajkumar/Documents/MERN/Project/GoVehicle/backend/src/modules/auth/auth.controller.ts:45:22)","timestamp":"2026-06-06 19:49:09:499"}
+{"level":"http","message":"::1 - POST /api/v1/auth/login 401 381 - 293.459 ms","timestamp":"2026-06-06 19:49:09:499"}
+{"level":"info","message":"User login attempt with email: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:17:4917"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"verify-tester-1@example.com\",1,0] | Duration: 0ms","timestamp":"2026-06-06 19:49:17:4917"}
+{"level":"info","message":"User logged in successfully: verify-tester-1@example.com","timestamp":"2026-06-06 19:49:17:4917"}
+{"level":"http","message":"::1 - POST /api/v1/auth/login 200 790 - 388.789 ms","timestamp":"2026-06-06 19:49:17:4917"}
+{"level":"info","message":"User logged out successfully.","timestamp":"2026-06-06 19:49:26:4926"}
+{"level":"http","message":"::1 - POST /api/v1/auth/logout 200 53 - 1.184 ms","timestamp":"2026-06-06 19:49:26:4926"}
+{"level":"http","message":"::1 - GET /api-docs/ 304 - - 5.352 ms","timestamp":"2026-06-06 19:51:27:5127"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 12.523 ms","timestamp":"2026-06-06 19:51:27:5127"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-bundle.js 304 - - 13.155 ms","timestamp":"2026-06-06 19:51:27:5127"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 1.661 ms","timestamp":"2026-06-06 19:51:27:5127"}
+{"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 200 12449 - 0.374 ms","timestamp":"2026-06-06 19:51:27:5127"}
+{"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 5.671 ms","timestamp":"2026-06-06 19:51:28:5128"}

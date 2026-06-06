@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.refreshTokenSchema = exports.verifyEmailSchema = exports.loginSchema = exports.registerSchema = void 0;
+exports.logoutSchema = exports.resetPasswordSchema = exports.forgotPasswordSchema = exports.refreshTokenSchema = exports.verifyEmailSchema = exports.loginSchema = exports.registerSchema = void 0;
 const zod_1 = require("zod");
 // Shared password complexity validation rules
 const passwordComplexity = zod_1.z
@@ -48,4 +48,25 @@ exports.refreshTokenSchema = zod_1.z.object({
     refreshToken: zod_1.z
         .string({ required_error: 'Refresh token is required' })
         .min(1, 'Refresh token cannot be empty'),
+});
+exports.forgotPasswordSchema = zod_1.z.object({
+    email: zod_1.z
+        .string({ required_error: 'Email is required' })
+        .trim()
+        .email('Invalid email address format'),
+});
+exports.resetPasswordSchema = zod_1.z.object({
+    email: zod_1.z
+        .string({ required_error: 'Email is required' })
+        .trim()
+        .email('Invalid email address format'),
+    otp: zod_1.z
+        .string({ required_error: 'OTP is required' })
+        .trim()
+        .length(6, 'OTP must be exactly 6 digits')
+        .regex(/^\d+$/, 'OTP must contain only digits'),
+    newPassword: passwordComplexity,
+});
+exports.logoutSchema = zod_1.z.object({
+    refreshToken: zod_1.z.string().optional(),
 });

@@ -1,6 +1,15 @@
 import { User } from '@prisma/client';
 import { AuthRepository } from './auth.repository';
-import { RegisterRequestDto, LoginRequestDto, VerifyEmailRequestDto, RefreshTokenRequestDto } from './auth.types';
+import {
+  RegisterRequestDto,
+  LoginRequestDto,
+  VerifyEmailRequestDto,
+  RefreshTokenRequestDto,
+  ForgotPasswordRequestDto,
+  ResetPasswordRequestDto,
+  LogoutRequestDto,
+} from './auth.types';
+import { sendEmail } from '../../common/utils/send-email';
 import { hashPassword } from '../../common/utils/hash-password';
 import { comparePassword } from '../../common/utils/compare-password';
 import { generateOtp } from '../../common/utils/generate-otp';
@@ -179,6 +188,80 @@ export class AuthService {
     logger.info(`Tokens refreshed successfully for user: ${user.email}`);
 
     return { accessToken, refreshToken: newRefreshToken };
+  }
+
+  /**
+   * Generates a password reset OTP and sends it via email.
+   */
+  async forgotPassword(dto: ForgotPasswordRequestDto): Promise<void> {
+    const { email } = dto;
+
+    logger.info(`Forgot password request initiated for email: ${email}`);
+
+    const user = await this.authRepository.findByEmail(email);
+    if (!user) {
+      logger.warn(`Forgot password request failed. Email address not found: ${email}`);
+      throw new NotFoundError('A user with this email address does not exist.');
+    }
+
+    // Invalidate any existing password reset OTPs to ensure security
+    await this.authRepository.deleteOtps(email, 'PASSWORD_RESET');
+
+    const otpCode = generateOtp();
+    const expiresAt = new Date();
+    expiresAt.setMinutes(expiresAt.getMinutes() + 10); // Code valid for 10 minutes
+
+    await this.authRepository.createOtp(email, otpCode, 'PASSWORD_RESET', expiresAt);
+
+    logger.info(`Password reset OTP created successfully: ${email}. Code: ${otpCode}`);
+
+    // Send reset instructions to user email
+    await sendEmail({
+      to: email,
+      subject: 'Password Reset OTP - GoVehicle',
+      text: `Hello ${user.name},\n\nYou requested a password reset. Your 6-digit password reset OTP is:\n\n${otpCode}\n\nThis OTP is valid for 10 minutes. If you did not make this request, please ignore this email.`,
+      html: `<p>Hello <strong>${user.name}</strong>,</p><p>You requested a password reset. Your 6-digit password reset OTP is:</p><h3>${otpCode}</h3><p>This OTP is valid for 10 minutes. If you did not make this request, please ignore this email.</p>`,
+    });
+  }
+
+  /**
+   * Resets the user's password using the verification OTP.
+   */
+  async resetPassword(dto: ResetPasswordRequestDto): Promise<void> {
+    const { email, otp, newPassword } = dto;
+
+    logger.info(`Reset password request submitted for email: ${email}`);
+
+    const user = await this.authRepository.findByEmail(email);
+    if (!user) {
+      logger.warn(`Reset password failed. User not found: ${email}`);
+      throw new NotFoundError('User not found.');
+    }
+
+    const otpRecord = await this.authRepository.findOtp(email, otp, 'PASSWORD_RESET');
+    if (!otpRecord) {
+      logger.warn(`Reset password failed. Invalid OTP code: ${otp} for email: ${email}`);
+      throw new BadRequestError('Invalid OTP code or email address.');
+    }
+
+    const now = new Date();
+    if (otpRecord.expiresAt < now) {
+      logger.warn(`Reset password failed. OTP code expired for email: ${email}`);
+      throw new BadRequestError('OTP has expired. Please request a new one.');
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    await this.authRepository.resetUserPasswordAndDeleteOtps(email, hashedPassword, otpRecord.id);
+
+    logger.info(`Password reset successfully for user: ${email}`);
+  }
+
+  /**
+   * Logout user.
+   */
+  async logout(_dto: LogoutRequestDto): Promise<void> {
+    logger.info('User logged out successfully.');
   }
 }
 

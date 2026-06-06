@@ -60,4 +60,31 @@ export const refreshTokenSchema = z.object({
     .min(1, 'Refresh token cannot be empty'),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string({ required_error: 'Email is required' })
+    .trim()
+    .email('Invalid email address format'),
+});
+
+export const resetPasswordSchema = z.object({
+  email: z
+    .string({ required_error: 'Email is required' })
+    .trim()
+    .email('Invalid email address format'),
+  
+  otp: z
+    .string({ required_error: 'OTP is required' })
+    .trim()
+    .length(6, 'OTP must be exactly 6 digits')
+    .regex(/^\d+$/, 'OTP must contain only digits'),
+
+  newPassword: passwordComplexity,
+});
+
+export const logoutSchema = z.object({
+  refreshToken: z.string().optional(),
+});
+
+
 

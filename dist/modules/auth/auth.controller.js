@@ -76,6 +76,48 @@ class AuthController {
             next(error);
         }
     };
+    /**
+     * HTTP handler to initiate password reset request.
+     * POST /api/v1/auth/forgot-password
+     */
+    forgotPassword = async (req, res, next) => {
+        try {
+            const validatedBody = auth_validation_1.forgotPasswordSchema.parse(req.body);
+            await this.authService.forgotPassword(validatedBody);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Password reset OTP sent to your email address.'));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
+    /**
+     * HTTP handler to execute password reset using OTP.
+     * POST /api/v1/auth/reset-password
+     */
+    resetPassword = async (req, res, next) => {
+        try {
+            const validatedBody = auth_validation_1.resetPasswordSchema.parse(req.body);
+            await this.authService.resetPassword(validatedBody);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Password has been reset successfully.'));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
+    /**
+     * HTTP handler to log out user.
+     * POST /api/v1/auth/logout
+     */
+    logout = async (req, res, next) => {
+        try {
+            const validatedBody = auth_validation_1.logoutSchema.parse(req.body);
+            await this.authService.logout(validatedBody);
+            res.status(200).json(api_response_dto_1.ResponseDto.success('Logged out successfully.'));
+        }
+        catch (error) {
+            next(error);
+        }
+    };
 }
 exports.AuthController = AuthController;
 exports.default = AuthController;

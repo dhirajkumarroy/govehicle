@@ -89,8 +89,48 @@ export class AuthRepository {
       where: { id },
     });
   }
+
+  /**
+   * Creates a new OTP record.
+   */
+  async createOtp(email: string, code: string, type: OtpType, expiresAt: Date): Promise<Otp> {
+    return prisma.otp.create({
+      data: {
+        email,
+        code,
+        type,
+        expiresAt,
+      },
+    });
+  }
+
+  /**
+   * Deletes all OTP records of a certain type for an email.
+   */
+  async deleteOtps(email: string, type: OtpType): Promise<void> {
+    await prisma.otp.deleteMany({
+      where: { email, type },
+    });
+  }
+
+  /**
+   * Updates user password and deletes the verified OTP record atomically in a transaction.
+   */
+  async resetUserPasswordAndDeleteOtps(email: string, passwordHash: string, otpId: string): Promise<void> {
+    await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { email },
+        data: { password: passwordHash },
+      });
+
+      await tx.otp.delete({
+        where: { id: otpId },
+      });
+    });
+  }
 }
 
 export default AuthRepository;
+
 
 

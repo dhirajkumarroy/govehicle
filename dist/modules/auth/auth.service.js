@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const auth_repository_1 = require("./auth.repository");
+const send_email_1 = require("../../common/utils/send-email");
 const hash_password_1 = require("../../common/utils/hash-password");
 const compare_password_1 = require("../../common/utils/compare-password");
 const generate_otp_1 = require("../../common/utils/generate-otp");
@@ -136,6 +137,63 @@ class AuthService {
         const newRefreshToken = (0, generate_jwt_1.generateRefreshToken)(tokenPayload);
         logger_1.default.info(`Tokens refreshed successfully for user: ${user.email}`);
         return { accessToken, refreshToken: newRefreshToken };
+    }
+    /**
+     * Generates a password reset OTP and sends it via email.
+     */
+    async forgotPassword(dto) {
+        const { email } = dto;
+        logger_1.default.info(`Forgot password request initiated for email: ${email}`);
+        const user = await this.authRepository.findByEmail(email);
+        if (!user) {
+            logger_1.default.warn(`Forgot password request failed. Email address not found: ${email}`);
+            throw new app_error_1.NotFoundError('A user with this email address does not exist.');
+        }
+        // Invalidate any existing password reset OTPs to ensure security
+        await this.authRepository.deleteOtps(email, 'PASSWORD_RESET');
+        const otpCode = (0, generate_otp_1.generateOtp)();
+        const expiresAt = new Date();
+        expiresAt.setMinutes(expiresAt.getMinutes() + 10); // Code valid for 10 minutes
+        await this.authRepository.createOtp(email, otpCode, 'PASSWORD_RESET', expiresAt);
+        logger_1.default.info(`Password reset OTP created successfully: ${email}. Code: ${otpCode}`);
+        // Send reset instructions to user email
+        await (0, send_email_1.sendEmail)({
+            to: email,
+            subject: 'Password Reset OTP - GoVehicle',
+            text: `Hello ${user.name},\n\nYou requested a password reset. Your 6-digit password reset OTP is:\n\n${otpCode}\n\nThis OTP is valid for 10 minutes. If you did not make this request, please ignore this email.`,
+            html: `<p>Hello <strong>${user.name}</strong>,</p><p>You requested a password reset. Your 6-digit password reset OTP is:</p><h3>${otpCode}</h3><p>This OTP is valid for 10 minutes. If you did not make this request, please ignore this email.</p>`,
+        });
+    }
+    /**
+     * Resets the user's password using the verification OTP.
+     */
+    async resetPassword(dto) {
+        const { email, otp, newPassword } = dto;
+        logger_1.default.info(`Reset password request submitted for email: ${email}`);
+        const user = await this.authRepository.findByEmail(email);
+        if (!user) {
+            logger_1.default.warn(`Reset password failed. User not found: ${email}`);
+            throw new app_error_1.NotFoundError('User not found.');
+        }
+        const otpRecord = await this.authRepository.findOtp(email, otp, 'PASSWORD_RESET');
+        if (!otpRecord) {
+            logger_1.default.warn(`Reset password failed. Invalid OTP code: ${otp} for email: ${email}`);
+            throw new app_error_1.BadRequestError('Invalid OTP code or email address.');
+        }
+        const now = new Date();
+        if (otpRecord.expiresAt < now) {
+            logger_1.default.warn(`Reset password failed. OTP code expired for email: ${email}`);
+            throw new app_error_1.BadRequestError('OTP has expired. Please request a new one.');
+        }
+        const hashedPassword = await (0, hash_password_1.hashPassword)(newPassword);
+        await this.authRepository.resetUserPasswordAndDeleteOtps(email, hashedPassword, otpRecord.id);
+        logger_1.default.info(`Password reset successfully for user: ${email}`);
+    }
+    /**
+     * Logout user.
+     */
+    async logout(_dto) {
+        logger_1.default.info('User logged out successfully.');
     }
 }
 exports.AuthService = AuthService;

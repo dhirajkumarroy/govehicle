@@ -81,6 +81,41 @@ class AuthRepository {
             where: { id },
         });
     }
+    /**
+     * Creates a new OTP record.
+     */
+    async createOtp(email, code, type, expiresAt) {
+        return database_1.default.otp.create({
+            data: {
+                email,
+                code,
+                type,
+                expiresAt,
+            },
+        });
+    }
+    /**
+     * Deletes all OTP records of a certain type for an email.
+     */
+    async deleteOtps(email, type) {
+        await database_1.default.otp.deleteMany({
+            where: { email, type },
+        });
+    }
+    /**
+     * Updates user password and deletes the verified OTP record atomically in a transaction.
+     */
+    async resetUserPasswordAndDeleteOtps(email, passwordHash, otpId) {
+        await database_1.default.$transaction(async (tx) => {
+            await tx.user.update({
+                where: { email },
+                data: { password: passwordHash },
+            });
+            await tx.otp.delete({
+                where: { id: otpId },
+            });
+        });
+    }
 }
 exports.AuthRepository = AuthRepository;
 exports.default = AuthRepository;

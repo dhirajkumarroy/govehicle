@@ -145,4 +145,96 @@ router.post('/verify-email', controller.verifyEmail);
  *         description: Forbidden. User email is not verified.
  */
 router.post('/refresh-token', controller.refreshToken);
+/**
+ * @openapi
+ * /auth/forgot-password:
+ *   post:
+ *     summary: Request password reset OTP
+ *     description: Generates a 6-digit OTP code of type PASSWORD_RESET and sends it to the user's email address if registered.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: dhiraj@example.com
+ *     responses:
+ *       200:
+ *         description: Password reset OTP sent to your email address.
+ *       400:
+ *         description: Validation payload error.
+ *       404:
+ *         description: User with email address not found.
+ */
+router.post('/forgot-password', controller.forgotPassword);
+/**
+ * @openapi
+ * /auth/reset-password:
+ *   post:
+ *     summary: Reset password using OTP
+ *     description: Validates the PASSWORD_RESET OTP and resets the user's password to the new password.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - otp
+ *               - newPassword
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: dhiraj@example.com
+ *               otp:
+ *                 type: string
+ *                 example: "123456"
+ *               newPassword:
+ *                 type: string
+ *                 format: password
+ *                 example: Password@123
+ *     responses:
+ *       200:
+ *         description: Password has been reset successfully.
+ *       400:
+ *         description: Validation payload error, invalid OTP, or expired OTP.
+ *       404:
+ *         description: User not found.
+ */
+router.post('/reset-password', controller.resetPassword);
+/**
+ * @openapi
+ * /auth/logout:
+ *   post:
+ *     summary: Log out current user session
+ *     description: Invalidates the user session (stateless operation on server side).
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Logged out successfully.
+ */
+router.post('/logout', controller.logout);
 exports.default = router;

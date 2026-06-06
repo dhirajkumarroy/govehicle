@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from './auth.service';
-import { registerSchema, loginSchema, verifyEmailSchema, refreshTokenSchema } from './auth.validation';
+import {
+  registerSchema,
+  loginSchema,
+  verifyEmailSchema,
+  refreshTokenSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  logoutSchema,
+} from './auth.validation';
 import { ResponseDto } from '../../common/dto/api-response.dto';
 
 export class AuthController {
@@ -83,6 +91,57 @@ export class AuthController {
 
       res.status(200).json(
         ResponseDto.success('Tokens refreshed successfully.', result)
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to initiate password reset request.
+   * POST /api/v1/auth/forgot-password
+   */
+  forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const validatedBody = forgotPasswordSchema.parse(req.body);
+      await this.authService.forgotPassword(validatedBody);
+
+      res.status(200).json(
+        ResponseDto.success('Password reset OTP sent to your email address.')
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to execute password reset using OTP.
+   * POST /api/v1/auth/reset-password
+   */
+  resetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const validatedBody = resetPasswordSchema.parse(req.body);
+      await this.authService.resetPassword(validatedBody);
+
+      res.status(200).json(
+        ResponseDto.success('Password has been reset successfully.')
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * HTTP handler to log out user.
+   * POST /api/v1/auth/logout
+   */
+  logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const validatedBody = logoutSchema.parse(req.body);
+      await this.authService.logout(validatedBody);
+
+      res.status(200).json(
+        ResponseDto.success('Logged out successfully.')
       );
     } catch (error) {
       next(error);
