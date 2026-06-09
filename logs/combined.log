@@ -675,3 +675,10 @@
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 1.432 ms","timestamp":"2026-06-06 21:09:27:927"}
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 200 19773 - 4.237 ms","timestamp":"2026-06-06 21:09:27:927"}
 {"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 1.312 ms","timestamp":"2026-06-06 21:09:28:928"}
+{"level":"info","message":"\nReceived SIGTERM. Starting graceful shutdown...","timestamp":"2026-06-06 21:19:27:1927"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-09 21:23:57:2357"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-09 21:23:57:2357"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-09 21:23:57:2357"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-09 21:23:57:2357"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-09 21:23:57:2357"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-09 21:23:57:2357"}
