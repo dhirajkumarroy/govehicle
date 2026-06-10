@@ -35,6 +35,8 @@ router.get('/health', (_req, res) => {
 });
 const auth_routes_1 = __importDefault(require("../modules/auth/auth.routes"));
 const user_routes_1 = __importDefault(require("../modules/users/user.routes"));
+const vehicle_routes_1 = __importDefault(require("../modules/vehicles/vehicle.routes"));
 router.use('/auth', auth_routes_1.default);
 router.use('/users', user_routes_1.default);
+router.use('/vehicles', vehicle_routes_1.default);
 exports.default = router;

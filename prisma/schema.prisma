@@ -35,6 +35,26 @@ enum NotificationType {
   SYSTEM
 }
 
+enum FuelType {
+  PETROL
+  DIESEL
+  CNG
+  ELECTRIC
+  HYBRID
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+}
+
+enum VehicleStatus {
+  PENDING
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}
+
 model User {
   id              String         @id @default(uuid())
   email           String         @unique
@@ -69,15 +89,22 @@ model Otp {
 
 model Vehicle {
   id            String         @id @default(uuid())
-  name          String
-  vehicleType   String         // e.g. CAR, BIKE, SCOOTER
+  ownerId       String
+  title         String
+  brand         String
+  model         String
+  year          Int
   vehicleNumber String         @unique
-  description   String
+  fuelType      FuelType
+  transmission  Transmission
+  seatCapacity  Int
   pricePerDay   Float
+  city          String
   latitude      Float
   longitude     Float
+  description   String
+  status        VehicleStatus  @default(PENDING)
   isAvailable   Boolean        @default(true)
-  ownerId       String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
@@ -87,14 +114,19 @@ model Vehicle {
   bookings      Booking[]
 
   @@index([ownerId])
+  @@index([city])
+  @@index([brand])
+  @@index([status])
+  @@index([isAvailable])
+  @@index([pricePerDay])
   @@map("vehicles")
 }
 
 model VehicleImage {
   id        String   @id @default(uuid())
-  url       String   // Cloudinary secure URL
-  publicId  String   // Cloudinary public ID for deletion
   vehicleId String
+  imageUrl  String
+  isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
 
   // Relations

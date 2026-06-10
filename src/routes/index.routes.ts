@@ -35,9 +35,12 @@ router.get('/health', (_req, res) => {
 
 import authRouter from '../modules/auth/auth.routes';
 import userRouter from '../modules/users/user.routes';
+import vehicleRouter from '../modules/vehicles/vehicle.routes';
 
 router.use('/auth', authRouter);
 router.use('/users', userRouter);
+router.use('/vehicles', vehicleRouter);
 
 export default router;
+
 
