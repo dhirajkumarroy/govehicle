@@ -38,12 +38,14 @@ import userRouter from '../modules/users/user.routes';
 import vehicleRouter from '../modules/vehicles/vehicle.routes';
 import bookingRouter from '../modules/bookings/booking.routes';
 import notificationRouter from '../modules/notifications/notification.routes';
+import adminRouter from '../modules/admin/admin.routes';
 
 router.use('/auth', authRouter);
 router.use('/users', userRouter);
 router.use('/vehicles', vehicleRouter);
 router.use('/bookings', bookingRouter);
 router.use('/notifications', notificationRouter);
+router.use('/admin', adminRouter);
 
 export default router;
 

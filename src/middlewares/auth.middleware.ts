@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { verifyAccessToken } from '../common/utils/generate-jwt';
 import { AuthenticatedRequest } from '../common/interfaces/authenticated-request.interface';
-import { UnauthorizedError } from '../common/utils/app-error';
+import { UnauthorizedError, ForbiddenError } from '../common/utils/app-error';
 
 /**
  * Express middleware to authenticate API requests by verifying a Bearer access token.
@@ -29,6 +29,24 @@ export const authenticateRequest = (
   } catch (error) {
     next(new UnauthorizedError('Authentication token is invalid or expired.'));
   }
+};
+
+/**
+ * Express middleware to enforce that the authenticated user possesses the ADMIN role.
+ * Yields a 403 Forbidden if the check fails.
+ */
+export const requireAdmin = (
+  req: AuthenticatedRequest,
+  _res: Response,
+  next: NextFunction
+): void => {
+  if (!req.user) {
+    return next(new UnauthorizedError('Authentication required.'));
+  }
+  if (req.user.role !== 'ADMIN') {
+    return next(new ForbiddenError('Access forbidden. Admin role required.'));
+  }
+  next();
 };
 
 export default authenticateRequest;

@@ -104,6 +104,12 @@ export class AuthService {
       throw new ForbiddenError('Your email address is not verified. Please verify your email first.');
     }
 
+    // 3.5. Confirm user is not blocked
+    if (user.isBlocked) {
+      logger.warn(`Login blocked. Blocked user attempt: ${email}`);
+      throw new ForbiddenError('Your account has been blocked by an administrator.');
+    }
+
     // 4. Sign JWT Tokens
     const payload = { userId: user.id, email: user.email, role: user.role };
     const accessToken = generateAccessToken(payload);
@@ -179,6 +185,11 @@ export class AuthService {
     if (!user.isEmailVerified) {
       logger.warn(`Token refresh failed. User email is unverified: ${user.email}`);
       throw new ForbiddenError('Your email address is not verified. Please verify your email first.');
+    }
+
+    if (user.isBlocked) {
+      logger.warn(`Token refresh failed. User is blocked: ${user.email}`);
+      throw new ForbiddenError('Your account has been blocked by an administrator.');
     }
 
     const tokenPayload = { userId: user.id, email: user.email, role: user.role };

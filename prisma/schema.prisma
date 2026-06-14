@@ -69,6 +69,7 @@ model User {
   role            Role           @default(CUSTOMER)
   isEmailVerified Boolean        @default(false)
   avatar          String?        // Profile image URL (Cloudinary)
+  isBlocked       Boolean        @default(false)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   

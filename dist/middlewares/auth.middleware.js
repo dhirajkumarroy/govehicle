@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateRequest = void 0;
+exports.requireAdmin = exports.authenticateRequest = void 0;
 const generate_jwt_1 = require("../common/utils/generate-jwt");
 const app_error_1 = require("../common/utils/app-error");
 /**
@@ -26,4 +26,18 @@ const authenticateRequest = (req, _res, next) => {
     }
 };
 exports.authenticateRequest = authenticateRequest;
+/**
+ * Express middleware to enforce that the authenticated user possesses the ADMIN role.
+ * Yields a 403 Forbidden if the check fails.
+ */
+const requireAdmin = (req, _res, next) => {
+    if (!req.user) {
+        return next(new app_error_1.UnauthorizedError('Authentication required.'));
+    }
+    if (req.user.role !== 'ADMIN') {
+        return next(new app_error_1.ForbiddenError('Access forbidden. Admin role required.'));
+    }
+    next();
+};
+exports.requireAdmin = requireAdmin;
 exports.default = exports.authenticateRequest;
