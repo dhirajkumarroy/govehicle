@@ -31,9 +31,13 @@ enum OtpType {
 }
 
 enum NotificationType {
+  BOOKING_REQUEST
+  BOOKING_CONFIRMED
+  BOOKING_REJECTED
+  BOOKING_CANCELLED
+  SYSTEM
   EMAIL
   BOOKING
-  SYSTEM
 }
 
 enum FuelType {
@@ -171,10 +175,14 @@ model Notification {
   type      NotificationType @default(SYSTEM)
   isRead    Boolean          @default(false)
   createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 
   // Relations
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([type])
+  @@index([isRead])
+  @@index([createdAt])
   @@map("notifications")
 }

@@ -1,6 +1,7 @@
 import { BookingStatus, Role } from '@prisma/client';
 import { BookingRepository } from './booking.repository';
 import { VehicleRepository } from '../vehicles/vehicle.repository';
+import { NotificationService } from '../notifications/notification.service';
 import { CreateBookingDto } from './booking.types';
 import {
   NotFoundError,
@@ -13,10 +14,12 @@ import logger from '../../config/logger';
 export class BookingService {
   private bookingRepository: BookingRepository;
   private vehicleRepository: VehicleRepository;
+  private notificationService: NotificationService;
 
   constructor() {
     this.bookingRepository = new BookingRepository();
     this.vehicleRepository = new VehicleRepository();
+    this.notificationService = new NotificationService();
   }
 
   /**
@@ -70,6 +73,14 @@ export class BookingService {
     );
 
     logger.info(`BookingService: Booking ${booking.id} created successfully`);
+
+    // Trigger notification to the vehicle owner
+    this.notificationService.createNotification(booking.ownerId, {
+      title: 'New Booking Request',
+      message: 'You received a new booking request.',
+      type: 'BOOKING_REQUEST',
+    }).catch((err) => logger.error('Failed to trigger BOOKING_REQUEST notification', err));
+
     return booking;
   }
 
@@ -119,6 +130,14 @@ export class BookingService {
 
     const updatedBooking = await this.bookingRepository.updateStatus(id, BookingStatus.CONFIRMED);
     logger.info(`BookingService: Booking ${id} successfully confirmed`);
+
+    // Trigger notification to the customer
+    this.notificationService.createNotification(updatedBooking.customerId, {
+      title: 'Booking Confirmed',
+      message: 'Your booking has been confirmed.',
+      type: 'BOOKING_CONFIRMED',
+    }).catch((err) => logger.error('Failed to trigger BOOKING_CONFIRMED notification', err));
+
     return updatedBooking;
   }
 
@@ -145,6 +164,14 @@ export class BookingService {
 
     const updatedBooking = await this.bookingRepository.updateStatus(id, BookingStatus.REJECTED);
     logger.info(`BookingService: Booking ${id} successfully rejected`);
+
+    // Trigger notification to the customer
+    this.notificationService.createNotification(updatedBooking.customerId, {
+      title: 'Booking Rejected',
+      message: 'Your booking request was rejected.',
+      type: 'BOOKING_REJECTED',
+    }).catch((err) => logger.error('Failed to trigger BOOKING_REJECTED notification', err));
+
     return updatedBooking;
   }
 
@@ -174,6 +201,14 @@ export class BookingService {
 
     const updatedBooking = await this.bookingRepository.updateStatus(id, BookingStatus.CANCELLED);
     logger.info(`BookingService: Booking ${id} successfully cancelled`);
+
+    // Trigger notification to the vehicle owner
+    this.notificationService.createNotification(updatedBooking.ownerId, {
+      title: 'Booking Cancelled',
+      message: 'A customer cancelled a booking.',
+      type: 'BOOKING_CANCELLED',
+    }).catch((err) => logger.error('Failed to trigger BOOKING_CANCELLED notification', err));
+
     return updatedBooking;
   }
 
