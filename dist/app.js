@@ -16,26 +16,54 @@ const error_middleware_1 = require("./middlewares/error.middleware");
 const rate_limit_middleware_1 = require("./middlewares/rate-limit.middleware");
 const index_routes_1 = __importDefault(require("./routes/index.routes"));
 const app_error_1 = require("./common/utils/app-error");
+const crypto_1 = require("crypto");
+const redis_1 = require("./config/redis");
+const database_1 = require("./config/database");
 const app = (0, express_1.default)();
-// 1. Security Headers Middleware
+// 1. Unique Request ID Middleware
+app.use((req, _res, next) => {
+    req.id = req.headers['x-request-id'] || (0, crypto_1.randomUUID)();
+    next();
+});
+// 2. Security Headers Middleware
 app.use((0, helmet_1.default)());
-// 2. Cross-Origin Resource Sharing
+// 3. Cross-Origin Resource Sharing
 app.use((0, cors_1.default)({
     origin: '*', // In production, customize this to trust specific domains
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-request-id'],
     credentials: true,
 }));
-// 3. Request Body Parsing
+// 4. Request Body Parsing
 app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
-// 4. HTTP Request Logging Middleware (Morgan piped into Winston)
+// 5. HTTP Request Logging Middleware (Morgan piped into Winston)
 const morganStream = {
     write: (message) => logger_1.default.http(message.trim()),
 };
-const morganMiddleware = (0, morgan_1.default)(':remote-addr - :method :url :status :res[content-length] - :response-time ms', { stream: morganStream });
+morgan_1.default.token('id', (req) => req.id);
+const morganMiddleware = (0, morgan_1.default)(':remote-addr - [:id] - :method :url :status :res[content-length] - :response-time ms', { stream: morganStream });
 app.use(morganMiddleware);
-// 5. Global Rate Limiter
+// 6. Global Health Check Endpoint (Mounted before prefix and rate limiter to avoid blocks)
+app.get('/health', async (_req, res) => {
+    try {
+        // Check DB
+        await database_1.prisma.$queryRaw `SELECT 1`;
+        // Check Redis
+        await redis_1.redisConnection.ping();
+        res.status(200).json({
+            status: 'healthy',
+        });
+    }
+    catch (error) {
+        logger_1.default.error('Health Check Failed:', error);
+        res.status(503).json({
+            status: 'unhealthy',
+            error: error instanceof Error ? error.message : String(error),
+        });
+    }
+});
+// 7. Global Rate Limiter
 app.use(env_1.env.API_PREFIX, rate_limit_middleware_1.rateLimiter);
 // 6. Swagger API Documentation Configuration
 const swaggerOptions = {

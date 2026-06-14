@@ -7,6 +7,9 @@ const app_1 = __importDefault(require("./app"));
 const env_1 = require("./config/env");
 const database_1 = require("./config/database");
 const logger_1 = __importDefault(require("./config/logger"));
+const email_worker_1 = require("./workers/email.worker");
+const notification_worker_1 = require("./workers/notification.worker");
+const redis_1 = require("./config/redis");
 let server;
 // Handle uncaught synchronous exceptions to prevent silent crashes
 process.on('uncaughtException', (error) => {
@@ -44,14 +47,20 @@ const handleGracefulShutdown = (signal) => {
     if (server) {
         server.close(async () => {
             logger_1.default.info('HTTP server closed.');
-            // Close Database Client connection
+            // Close Workers, Redis, and Database
             try {
+                await email_worker_1.emailWorker.close();
+                logger_1.default.info('Email queue worker stopped.');
+                await notification_worker_1.notificationWorker.close();
+                logger_1.default.info('Notification queue worker stopped.');
+                await redis_1.redisConnection.quit();
+                logger_1.default.info('Redis connection disconnected.');
                 await database_1.prisma.$disconnect();
                 logger_1.default.info('Database connection closed gracefully.');
                 process.exit(0);
             }
             catch (err) {
-                logger_1.default.error('Error closing database connection:', err);
+                logger_1.default.error('Error during graceful shutdown:', err);
                 process.exit(1);
             }
         });

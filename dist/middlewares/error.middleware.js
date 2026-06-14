@@ -10,14 +10,15 @@ const app_error_1 = require("../common/utils/app-error");
 const api_response_dto_1 = require("../common/dto/api-response.dto");
 const logger_1 = __importDefault(require("../config/logger"));
 const env_1 = require("../config/env");
-const errorMiddleware = (err, _req, res, 
+const errorMiddleware = (err, req, res, 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 _next) => {
     let statusCode = 500;
     let message = 'Internal Server Error';
     let errors = null;
+    const reqId = req.id || 'N/A';
     // Log error
-    logger_1.default.error(`${err.name}: ${err.message}\nStack: ${err.stack}`);
+    logger_1.default.error(`[Request ID: ${reqId}] ${err.name}: ${err.message}\nStack: ${err.stack}`);
     // Handle custom AppError
     if (err instanceof app_error_1.AppError) {
         statusCode = err.statusCode;

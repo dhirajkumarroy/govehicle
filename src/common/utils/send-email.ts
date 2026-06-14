@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { env } from '../../config/env';
 import logger from '../../config/logger';
+import { emailQueue } from '../../queues/email.queue';
 
 export interface SendEmailOptions {
   to: string;
@@ -10,10 +11,17 @@ export interface SendEmailOptions {
 }
 
 /**
- * Standard utility function to send emails using Nodemailer.
- * If credentials are not set or left as default, logs the content instead of throwing.
+ * Standard utility function to queue email jobs.
  */
 export const sendEmail = async (options: SendEmailOptions): Promise<void> => {
+  logger.info(`Queueing email to ${options.to} with subject: ${options.subject}`);
+  await emailQueue.add('send_email', options);
+};
+
+/**
+ * Actual execution of SMTP sending. Invoked by the background worker.
+ */
+export const sendEmailDirect = async (options: SendEmailOptions): Promise<void> => {
   const { to, subject, text, html } = options;
 
   // Check if SMTP configuration contains default placeholders

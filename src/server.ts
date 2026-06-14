@@ -3,6 +3,9 @@ import app from './app';
 import { env } from './config/env';
 import { connectDb, prisma } from './config/database';
 import logger from './config/logger';
+import { emailWorker } from './workers/email.worker';
+import { notificationWorker } from './workers/notification.worker';
+import { redisConnection } from './config/redis';
 
 let server: Server;
 
@@ -47,13 +50,19 @@ const handleGracefulShutdown = (signal: string) => {
     server.close(async () => {
       logger.info('HTTP server closed.');
       
-      // Close Database Client connection
+      // Close Workers, Redis, and Database
       try {
+        await emailWorker.close();
+        logger.info('Email queue worker stopped.');
+        await notificationWorker.close();
+        logger.info('Notification queue worker stopped.');
+        await redisConnection.quit();
+        logger.info('Redis connection disconnected.');
         await prisma.$disconnect();
         logger.info('Database connection closed gracefully.');
         process.exit(0);
       } catch (err) {
-        logger.error('Error closing database connection:', err);
+        logger.error('Error during graceful shutdown:', err);
         process.exit(1);
       }
     });

@@ -24,7 +24,9 @@ winston_1.default.addColors(colors);
 const format = winston_1.default.format.combine(winston_1.default.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }), winston_1.default.format.colorize({ all: true }), winston_1.default.format.printf((info) => `[${info.timestamp}] [${info.level}]: ${info.message}`));
 const transports = [
     new winston_1.default.transports.Console({
-        format: winston_1.default.format.combine(winston_1.default.format.colorize(), winston_1.default.format.simple()),
+        format: env_1.env.NODE_ENV === 'production'
+            ? winston_1.default.format.combine(winston_1.default.format.timestamp(), winston_1.default.format.json())
+            : winston_1.default.format.combine(winston_1.default.format.colorize(), winston_1.default.format.simple()),
     }),
     new winston_1.default.transports.File({
         filename: 'logs/error.log',

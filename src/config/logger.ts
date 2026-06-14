@@ -29,10 +29,15 @@ const format = winston.format.combine(
 
 const transports = [
   new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    ),
+    format: env.NODE_ENV === 'production'
+      ? winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.json()
+        )
+      : winston.format.combine(
+          winston.format.colorize(),
+          winston.format.simple()
+        ),
   }),
   new winston.transports.File({
     filename: 'logs/error.log',

@@ -8,7 +8,7 @@ import { env } from '../config/env';
 
 export const errorMiddleware = (
   err: Error,
-  _req: Request,
+  req: Request,
   res: Response,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
@@ -17,8 +17,10 @@ export const errorMiddleware = (
   let message = 'Internal Server Error';
   let errors: any = null;
 
+  const reqId = (req as any).id || 'N/A';
+
   // Log error
-  logger.error(`${err.name}: ${err.message}\nStack: ${err.stack}`);
+  logger.error(`[Request ID: ${reqId}] ${err.name}: ${err.message}\nStack: ${err.stack}`);
 
   // Handle custom AppError
   if (err instanceof AppError) {

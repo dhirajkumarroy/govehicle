@@ -37,6 +37,9 @@ const envSchema = zod_1.z.object({
     CLOUDINARY_API_SECRET: zod_1.z.string().default(''),
     STORAGE_PROVIDER: zod_1.z.enum(['local', 'cloudinary']).default('local'),
     UPLOAD_DIR: zod_1.z.string().default('uploads'),
+    REDIS_HOST: zod_1.z.string().default('localhost'),
+    REDIS_PORT: zod_1.z.coerce.number().default(6379),
+    REDIS_PASSWORD: zod_1.z.string().optional(),
 });
 const parseEnv = () => {
     const result = envSchema.safeParse(process.env);

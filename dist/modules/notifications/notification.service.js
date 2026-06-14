@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationService = void 0;
 const notification_repository_1 = require("./notification.repository");
+const notification_queue_1 = require("../../queues/notification.queue");
 const app_error_1 = require("../../common/utils/app-error");
 const logger_1 = __importDefault(require("../../config/logger"));
 class NotificationService {
@@ -13,10 +14,17 @@ class NotificationService {
         this.notificationRepository = new notification_repository_1.NotificationRepository();
     }
     /**
-     * Triggers creation of a notification.
+     * Triggers creation of a notification by adding it to a background queue.
      */
     async createNotification(userId, data) {
-        logger_1.default.info(`NotificationService: Creating notification [type: ${data.type}] for user ${userId}`);
+        logger_1.default.info(`NotificationService: Queueing notification [type: ${data.type}] for user ${userId}`);
+        return notification_queue_1.notificationQueue.add('create_notification', { userId, data });
+    }
+    /**
+     * Actual direct creation of notification in database (called by background worker).
+     */
+    async createNotificationDirect(userId, data) {
+        logger_1.default.info(`NotificationService: Creating notification in database for user ${userId}`);
         return this.notificationRepository.create(userId, data);
     }
     /**

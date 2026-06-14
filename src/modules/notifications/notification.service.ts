@@ -1,5 +1,6 @@
 import { Notification, NotificationType } from '@prisma/client';
 import { NotificationRepository } from './notification.repository';
+import { notificationQueue } from '../../queues/notification.queue';
 import { NotFoundError, ForbiddenError } from '../../common/utils/app-error';
 import logger from '../../config/logger';
 
@@ -11,13 +12,24 @@ export class NotificationService {
   }
 
   /**
-   * Triggers creation of a notification.
+   * Triggers creation of a notification by adding it to a background queue.
    */
   async createNotification(
     userId: string,
     data: { title: string; message: string; type: NotificationType }
+  ): Promise<any> {
+    logger.info(`NotificationService: Queueing notification [type: ${data.type}] for user ${userId}`);
+    return notificationQueue.add('create_notification', { userId, data });
+  }
+
+  /**
+   * Actual direct creation of notification in database (called by background worker).
+   */
+  async createNotificationDirect(
+    userId: string,
+    data: { title: string; message: string; type: NotificationType }
   ): Promise<Notification> {
-    logger.info(`NotificationService: Creating notification [type: ${data.type}] for user ${userId}`);
+    logger.info(`NotificationService: Creating notification in database for user ${userId}`);
     return this.notificationRepository.create(userId, data);
   }
 

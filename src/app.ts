@@ -13,36 +13,67 @@ import { rateLimiter } from './middlewares/rate-limit.middleware';
 import indexRouter from './routes/index.routes';
 import { NotFoundError } from './common/utils/app-error';
 
+import { randomUUID } from 'crypto';
+import { redisConnection } from './config/redis';
+import { prisma } from './config/database';
+
 const app: Application = express();
 
-// 1. Security Headers Middleware
+// 1. Unique Request ID Middleware
+app.use((req: any, _res: Response, next: NextFunction) => {
+  req.id = req.headers['x-request-id'] || randomUUID();
+  next();
+});
+
+// 2. Security Headers Middleware
 app.use(helmet());
 
-// 2. Cross-Origin Resource Sharing
+// 3. Cross-Origin Resource Sharing
 app.use(
   cors({
     origin: '*', // In production, customize this to trust specific domains
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-request-id'],
     credentials: true,
   })
 );
 
-// 3. Request Body Parsing
+// 4. Request Body Parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// 4. HTTP Request Logging Middleware (Morgan piped into Winston)
+// 5. HTTP Request Logging Middleware (Morgan piped into Winston)
 const morganStream = {
   write: (message: string) => logger.http(message.trim()),
 };
+morgan.token('id', (req: any) => req.id);
 const morganMiddleware = morgan(
-  ':remote-addr - :method :url :status :res[content-length] - :response-time ms',
+  ':remote-addr - [:id] - :method :url :status :res[content-length] - :response-time ms',
   { stream: morganStream }
 );
 app.use(morganMiddleware);
 
-// 5. Global Rate Limiter
+// 6. Global Health Check Endpoint (Mounted before prefix and rate limiter to avoid blocks)
+app.get('/health', async (_req: Request, res: Response) => {
+  try {
+    // Check DB
+    await prisma.$queryRaw`SELECT 1`;
+    // Check Redis
+    await redisConnection.ping();
+
+    res.status(200).json({
+      status: 'healthy',
+    });
+  } catch (error) {
+    logger.error('Health Check Failed:', error);
+    res.status(503).json({
+      status: 'unhealthy',
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+// 7. Global Rate Limiter
 app.use(env.API_PREFIX, rateLimiter);
 
 // 6. Swagger API Documentation Configuration

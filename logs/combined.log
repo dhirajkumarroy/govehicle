@@ -1394,3 +1394,59 @@
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui-init.js 304 - - 1.457 ms","timestamp":"2026-06-15 00:17:04:174"}
 {"level":"http","message":"::1 - GET /api-docs/swagger-ui.css 304 - - 18.739 ms","timestamp":"2026-06-15 00:17:04:174"}
 {"level":"http","message":"::1 - GET /api-docs/favicon-32x32.png 304 - - 11.297 ms","timestamp":"2026-06-15 00:17:04:174"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:19:00:190"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:23:16:2316"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:24:43:2443"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 15ms","timestamp":"2026-06-15 00:24:52:2452"}
+{"level":"http","message":"::1 - [8dd0288c-ac84-41e2-bab4-dfb5a1420878] - GET /health 200 20 - 36.094 ms","timestamp":"2026-06-15 00:24:52:2452"}
+{"level":"http","message":"::1 - [ebb1c3be-9bdf-456d-a0f6-6caff2dbcfe4] - GET /api-docs/ 304 - - 10.386 ms","timestamp":"2026-06-15 00:25:00:250"}
+{"level":"http","message":"::1 - [22d5a19e-b3d2-4f30-81ed-d23a5d8915d2] - GET /api-docs/swagger-ui.css 304 - - 5.475 ms","timestamp":"2026-06-15 00:25:00:250"}
+{"level":"http","message":"::1 - [a66c523e-5a21-4c40-9915-6b9a7f536035] - GET /api-docs/swagger-ui-bundle.js 304 - - 6.067 ms","timestamp":"2026-06-15 00:25:00:250"}
+{"level":"http","message":"::1 - [250a7946-2ee9-4100-b1d1-85399fc8a639] - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 1.398 ms","timestamp":"2026-06-15 00:25:00:250"}
+{"level":"http","message":"::1 - [310aa95b-585a-44eb-a622-f4dbb74ed6d7] - GET /api-docs/swagger-ui-init.js 304 - - 0.565 ms","timestamp":"2026-06-15 00:25:00:250"}
+{"level":"http","message":"::1 - [b27a5836-0e51-4988-bd14-2b9f1ec5521d] - GET /api-docs/favicon-32x32.png 304 - - 4.437 ms","timestamp":"2026-06-15 00:25:01:251"}
+{"level":"info","message":"Forgot password request initiated for email: customer@example.com","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 42ms","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"customer@example.com\",1,0] | Duration: 20ms","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"debug","message":"Query: DELETE FROM \"public\".\"otps\" WHERE (\"public\".\"otps\".\"email\" = $1 AND \"public\".\"otps\".\"type\" = CAST($2::text AS \"public\".\"OtpType\")) | Params: [\"customer@example.com\",\"PASSWORD_RESET\"] | Duration: 8ms","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"debug","message":"Query: INSERT INTO \"public\".\"otps\" (\"id\",\"email\",\"code\",\"type\",\"expiresAt\",\"createdAt\") VALUES ($1,$2,$3,CAST($4::text AS \"public\".\"OtpType\"),$5,$6) RETURNING \"public\".\"otps\".\"id\", \"public\".\"otps\".\"email\", \"public\".\"otps\".\"code\", \"public\".\"otps\".\"type\"::text, \"public\".\"otps\".\"expiresAt\", \"public\".\"otps\".\"createdAt\" | Params: [\"c9ddac94-cdfb-453d-911f-7715396e04c9\",\"customer@example.com\",\"649891\",\"PASSWORD_RESET\",\"2026-06-14 19:05:17.242 UTC\",\"2026-06-14 18:55:17.244 UTC\"] | Duration: 4ms","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"info","message":"Password reset OTP created successfully: customer@example.com. Code: 649891","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"info","message":"Queueing email to customer@example.com with subject: Password Reset OTP - GoVehicle","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"http","message":"::1 - [f665826d-d442-4597-b2d0-ad1384a701ac] - POST /api/v1/auth/forgot-password 200 75 - 187.117 ms","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"info","message":"EmailWorker: Processing job 1 to customer@example.com","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"warn","message":"[MOCK EMAIL SERVICE] SMTP credentials not fully configured. Email simulated instead of sent.","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"warn","message":"To:      customer@example.com","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"warn","message":"Subject: Password Reset OTP - GoVehicle","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"warn","message":"Body:    Hello Vehicle Customer,\n\nYou requested a password reset. Your 6-digit password reset OTP is:\n\n649891\n\nThis OTP is valid for 10 minutes. If you did not make this request, please ignore this email.","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"info","message":"EmailWorker: Job 1 completed successfully.","timestamp":"2026-06-15 00:25:17:2517"}
+{"level":"info","message":"AdminService: Blocking user ID: 966b450b-1e0c-414b-b882-1c7e4b486856","timestamp":"2026-06-15 00:25:36:2536"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 0ms","timestamp":"2026-06-15 00:25:36:2536"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"id\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"966b450b-1e0c-414b-b882-1c7e4b486856\",1,0] | Duration: 0ms","timestamp":"2026-06-15 00:25:36:2536"}
+{"level":"debug","message":"Query: UPDATE \"public\".\"users\" SET \"isBlocked\" = $1, \"updatedAt\" = $2 WHERE (\"public\".\"users\".\"id\" = $3 AND 1=1) RETURNING \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" | Params: [true,\"2026-06-14 18:55:36.990 UTC\",\"966b450b-1e0c-414b-b882-1c7e4b486856\"] | Duration: 2ms","timestamp":"2026-06-15 00:25:36:2536"}
+{"level":"info","message":"NotificationService: Queueing notification [type: SYSTEM] for user 966b450b-1e0c-414b-b882-1c7e4b486856","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"http","message":"::1 - [5b6cded1-0b70-4fe1-be08-775dfc59c16b] - PATCH /api/v1/admin/users/966b450b-1e0c-414b-b882-1c7e4b486856/block 200 345 - 37.763 ms","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"info","message":"NotificationWorker: Processing job 1 for user 966b450b-1e0c-414b-b882-1c7e4b486856","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"info","message":"NotificationService: Creating notification in database for user 966b450b-1e0c-414b-b882-1c7e4b486856","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"debug","message":"Query: INSERT INTO \"public\".\"notifications\" (\"id\",\"userId\",\"title\",\"message\",\"type\",\"isRead\",\"createdAt\",\"updatedAt\") VALUES ($1,$2,$3,$4,CAST($5::text AS \"public\".\"NotificationType\"),$6,$7,$8) RETURNING \"public\".\"notifications\".\"id\", \"public\".\"notifications\".\"userId\", \"public\".\"notifications\".\"title\", \"public\".\"notifications\".\"message\", \"public\".\"notifications\".\"type\"::text, \"public\".\"notifications\".\"isRead\", \"public\".\"notifications\".\"createdAt\", \"public\".\"notifications\".\"updatedAt\" | Params: [\"3930dd49-5254-461b-aa25-02cb1b41eb63\",\"966b450b-1e0c-414b-b882-1c7e4b486856\",\"Account Blocked\",\"Your account has been blocked by an administrator.\",\"SYSTEM\",false,\"2026-06-14 18:55:37.016 UTC\",\"2026-06-14 18:55:37.016 UTC\"] | Duration: 4ms","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"info","message":"NotificationWorker: Job 1 completed successfully.","timestamp":"2026-06-15 00:25:37:2537"}
+{"level":"info","message":"AdminService: Unblocking user ID: 966b450b-1e0c-414b-b882-1c7e4b486856","timestamp":"2026-06-15 00:25:55:2555"}
+{"level":"debug","message":"Query: SELECT 1 | Params: [] | Duration: 0ms","timestamp":"2026-06-15 00:25:55:2555"}
+{"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"id\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"966b450b-1e0c-414b-b882-1c7e4b486856\",1,0] | Duration: 0ms","timestamp":"2026-06-15 00:25:55:2555"}
+{"level":"debug","message":"Query: UPDATE \"public\".\"users\" SET \"isBlocked\" = $1, \"updatedAt\" = $2 WHERE (\"public\".\"users\".\"id\" = $3 AND 1=1) RETURNING \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" | Params: [false,\"2026-06-14 18:55:55.241 UTC\",\"966b450b-1e0c-414b-b882-1c7e4b486856\"] | Duration: 1ms","timestamp":"2026-06-15 00:25:55:2555"}
+{"level":"http","message":"::1 - [55a53fe2-85b2-4806-8772-26974920d7f1] - PATCH /api/v1/admin/users/966b450b-1e0c-414b-b882-1c7e4b486856/unblock 200 348 - 17.206 ms","timestamp":"2026-06-15 00:25:55:2555"}
