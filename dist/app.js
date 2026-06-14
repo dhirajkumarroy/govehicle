@@ -35,7 +35,12 @@ app.use((0, cors_1.default)({
     credentials: true,
 }));
 // 4. Request Body Parsing
-app.use(express_1.default.json({ limit: '10mb' }));
+app.use(express_1.default.json({
+    limit: '10mb',
+    verify: (req, _res, buf) => {
+        req.rawBody = buf;
+    },
+}));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
 // 5. HTTP Request Logging Middleware (Morgan piped into Winston)
 const morganStream = {

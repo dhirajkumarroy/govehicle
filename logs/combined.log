@@ -1450,3 +1450,66 @@
 {"level":"debug","message":"Query: SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"id\" = $1 AND 1=1) LIMIT $2 OFFSET $3 | Params: [\"966b450b-1e0c-414b-b882-1c7e4b486856\",1,0] | Duration: 0ms","timestamp":"2026-06-15 00:25:55:2555"}
 {"level":"debug","message":"Query: UPDATE \"public\".\"users\" SET \"isBlocked\" = $1, \"updatedAt\" = $2 WHERE (\"public\".\"users\".\"id\" = $3 AND 1=1) RETURNING \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"name\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isEmailVerified\", \"public\".\"users\".\"avatar\", \"public\".\"users\".\"isBlocked\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" | Params: [false,\"2026-06-14 18:55:55.241 UTC\",\"966b450b-1e0c-414b-b882-1c7e4b486856\"] | Duration: 1ms","timestamp":"2026-06-15 00:25:55:2555"}
 {"level":"http","message":"::1 - [55a53fe2-85b2-4806-8772-26974920d7f1] - PATCH /api/v1/admin/users/966b450b-1e0c-414b-b882-1c7e4b486856/unblock 200 348 - 17.206 ms","timestamp":"2026-06-15 00:25:55:2555"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:29:29:2929"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:33:59:3359"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:34:10:3410"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:34:15:3415"}
+{"level":"http","message":"::1 - [f8112962-9fee-4d56-bd08-24845d7b1f23] - GET /api-docs/ 304 - - 25.987 ms","timestamp":"2026-06-15 00:37:14:3714"}
+{"level":"http","message":"::1 - [0c2dba2e-d92b-4709-a37d-940d0b7c7b51] - GET /api-docs/swagger-ui.css 304 - - 9.364 ms","timestamp":"2026-06-15 00:37:14:3714"}
+{"level":"http","message":"::1 - [046d11f4-0876-416f-b317-fa631da28aeb] - GET /api-docs/swagger-ui-standalone-preset.js 304 - - 2.607 ms","timestamp":"2026-06-15 00:37:14:3714"}
+{"level":"http","message":"::1 - [e01957ab-3028-4158-9b98-563a97f63268] - GET /api-docs/swagger-ui-init.js 304 - - 0.806 ms","timestamp":"2026-06-15 00:37:14:3714"}
+{"level":"http","message":"::1 - [0e0a5e1b-0ef8-428a-a0e5-cb4213d769dd] - GET /api-docs/swagger-ui-bundle.js 304 - - 0.703 ms","timestamp":"2026-06-15 00:37:14:3714"}
+{"level":"http","message":"::1 - [8074ef2d-3763-4a28-acf4-0e5b9451cdad] - GET /api-docs/favicon-32x32.png 304 - - 0.864 ms","timestamp":"2026-06-15 00:37:15:3715"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:39:47:3947"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:39:55:3955"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:07:407"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:14:4014"}
+{"level":"info","message":"Redis: Connected successfully.","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"🐘 Database connected successfully via Prisma Client.","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"🚀 Server is successfully running in [development] mode.","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"📡 Listening on Port: http://localhost:8000","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"📖 Swagger Docs:      http://localhost:8000/api-docs","timestamp":"2026-06-15 00:40:53:4053"}
+{"level":"info","message":"===================================================","timestamp":"2026-06-15 00:40:53:4053"}

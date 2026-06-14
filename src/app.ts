@@ -39,7 +39,14 @@ app.use(
 );
 
 // 4. Request Body Parsing
-app.use(express.json({ limit: '10mb' }));
+app.use(
+  express.json({
+    limit: '10mb',
+    verify: (req: any, _res: any, buf: Buffer) => {
+      req.rawBody = buf;
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // 5. HTTP Request Logging Middleware (Morgan piped into Winston)

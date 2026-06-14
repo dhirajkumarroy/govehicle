@@ -40,6 +40,13 @@ enum NotificationType {
   BOOKING
 }
 
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
 enum FuelType {
   PETROL
   DIESEL
@@ -78,6 +85,7 @@ model User {
   bookings        Booking[]      @relation("CustomerBookings")
   ownerBookings   Booking[]      @relation("OwnerBookings")
   notifications   Notification[]
+  payments        Payment[]
 
   @@map("users")
 }
@@ -161,6 +169,7 @@ model Booking {
   vehicle     Vehicle       @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
   customer    User          @relation("CustomerBookings", fields: [customerId], references: [id], onDelete: Cascade)
   owner       User          @relation("OwnerBookings", fields: [ownerId], references: [id], onDelete: Cascade)
+  payments    Payment[]
 
   @@index([vehicleId])
   @@index([customerId])
@@ -186,4 +195,32 @@ model Notification {
   @@index([isRead])
   @@index([createdAt])
   @@map("notifications")
+}
+
+model Payment {
+  id                 String        @id @default(uuid())
+  bookingId          String
+  userId             String
+  amount             Float
+  currency           String        @default("INR")
+  provider           String        @default("RAZORPAY")
+  providerOrderId    String        @unique
+  providerPaymentId  String?       @unique
+  providerSignature  String?
+  status             PaymentStatus @default(PENDING)
+  paidAt             DateTime?
+  refundedAt         DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  // Relations
+  booking            Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Indexes for high performance querying
+  @@index([bookingId])
+  @@index([userId])
+  @@index([providerOrderId])
+  @@index([status])
+  @@map("payments")
 }

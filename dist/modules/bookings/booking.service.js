@@ -105,7 +105,7 @@ class BookingService {
         return updatedBooking;
     }
     /**
-     * Rejects a PENDING booking. Owner only.
+     * Rejects a PENDING or CONFIRMED booking. Owner only.
      */
     async rejectBooking(id, ownerId, userRole) {
         logger_1.default.info(`BookingService: Reject request for booking ${id} by owner ${ownerId}`);
@@ -117,9 +117,10 @@ class BookingService {
         if (booking.ownerId !== ownerId && userRole !== client_1.Role.ADMIN) {
             throw new app_error_1.ForbiddenError('Only the vehicle owner can reject this booking.');
         }
-        // Status transition check
-        if (booking.status !== client_1.BookingStatus.PENDING) {
-            throw new app_error_1.BadRequestError('Only pending bookings can be rejected.');
+        // Status transition check: allow rejecting PENDING or CONFIRMED bookings (which might be paid)
+        if (booking.status !== client_1.BookingStatus.PENDING &&
+            booking.status !== client_1.BookingStatus.CONFIRMED) {
+            throw new app_error_1.BadRequestError('Only pending or confirmed bookings can be rejected.');
         }
         const updatedBooking = await this.bookingRepository.updateStatus(id, client_1.BookingStatus.REJECTED);
         logger_1.default.info(`BookingService: Booking ${id} successfully rejected`);
@@ -129,6 +130,25 @@ class BookingService {
             message: 'Your booking request was rejected.',
             type: 'BOOKING_REJECTED',
         }).catch((err) => logger_1.default.error('Failed to trigger BOOKING_REJECTED notification', err));
+        // Handle auto refund if there is a successful payment
+        try {
+            const prismaInstance = require('../../config/database').default;
+            const successPayment = await prismaInstance.payment.findFirst({
+                where: {
+                    bookingId: id,
+                    status: 'SUCCESS',
+                },
+            });
+            if (successPayment) {
+                logger_1.default.info(`BookingService: Found successful payment ${successPayment.id} for booking ${id}. Triggering refund.`);
+                const { PaymentService } = require('../payments/payment.service');
+                const paymentService = new PaymentService();
+                await paymentService.refundPayment(successPayment.id, ownerId, userRole);
+            }
+        }
+        catch (refundErr) {
+            logger_1.default.error(`BookingService: Automatic refund failed for booking ${id}`, refundErr);
+        }
         return updatedBooking;
     }
     /**
@@ -157,6 +177,25 @@ class BookingService {
             message: 'A customer cancelled a booking.',
             type: 'BOOKING_CANCELLED',
         }).catch((err) => logger_1.default.error('Failed to trigger BOOKING_CANCELLED notification', err));
+        // Handle auto refund if there is a successful payment
+        try {
+            const prismaInstance = require('../../config/database').default;
+            const successPayment = await prismaInstance.payment.findFirst({
+                where: {
+                    bookingId: id,
+                    status: 'SUCCESS',
+                },
+            });
+            if (successPayment) {
+                logger_1.default.info(`BookingService: Found successful payment ${successPayment.id} for booking ${id}. Triggering refund.`);
+                const { PaymentService } = require('../payments/payment.service');
+                const paymentService = new PaymentService();
+                await paymentService.refundPayment(successPayment.id, customerId, userRole);
+            }
+        }
+        catch (refundErr) {
+            logger_1.default.error(`BookingService: Automatic refund failed for booking ${id}`, refundErr);
+        }
         return updatedBooking;
     }
     /**

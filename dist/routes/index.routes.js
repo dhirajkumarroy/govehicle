@@ -39,10 +39,12 @@ const vehicle_routes_1 = __importDefault(require("../modules/vehicles/vehicle.ro
 const booking_routes_1 = __importDefault(require("../modules/bookings/booking.routes"));
 const notification_routes_1 = __importDefault(require("../modules/notifications/notification.routes"));
 const admin_routes_1 = __importDefault(require("../modules/admin/admin.routes"));
+const payment_routes_1 = __importDefault(require("../modules/payments/payment.routes"));
 router.use('/auth', auth_routes_1.default);
 router.use('/users', user_routes_1.default);
 router.use('/vehicles', vehicle_routes_1.default);
 router.use('/bookings', booking_routes_1.default);
 router.use('/notifications', notification_routes_1.default);
 router.use('/admin', admin_routes_1.default);
+router.use('/payments', payment_routes_1.default);
 exports.default = router;

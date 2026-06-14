@@ -45,6 +45,10 @@ const envSchema = z.object({
   REDIS_HOST: z.string().default('localhost'),
   REDIS_PORT: z.coerce.number().default(6379),
   REDIS_PASSWORD: z.string().optional(),
+
+  RAZORPAY_KEY_ID: z.string().default('rzp_test_mockkeyid123'),
+  RAZORPAY_KEY_SECRET: z.string().default('mocksecretkey456'),
+  RAZORPAY_WEBHOOK_SECRET: z.string().default('mockwebhooksecret789'),
 });
 
 

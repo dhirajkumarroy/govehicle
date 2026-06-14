@@ -40,6 +40,9 @@ const envSchema = zod_1.z.object({
     REDIS_HOST: zod_1.z.string().default('localhost'),
     REDIS_PORT: zod_1.z.coerce.number().default(6379),
     REDIS_PASSWORD: zod_1.z.string().optional(),
+    RAZORPAY_KEY_ID: zod_1.z.string().default('rzp_test_mockkeyid123'),
+    RAZORPAY_KEY_SECRET: zod_1.z.string().default('mocksecretkey456'),
+    RAZORPAY_WEBHOOK_SECRET: zod_1.z.string().default('mockwebhooksecret789'),
 });
 const parseEnv = () => {
     const result = envSchema.safeParse(process.env);
