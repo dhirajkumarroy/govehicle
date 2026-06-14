@@ -4,8 +4,6 @@ import { createBookingSchema, bookingQuerySchema } from './booking.validation';
 import { AuthenticatedRequest } from '../../common/interfaces/authenticated-request.interface';
 import { ResponseDto } from '../../common/dto/api-response.dto';
 import { UnauthorizedError, BadRequestError } from '../../common/utils/app-error';
-import logger from '../../config/logger';
-
 export class BookingController {
   private bookingService: BookingService;
 
